@@ -8,6 +8,7 @@ import {
   MenuItem,
   InputLabel,
   FormControl,
+  InputAdornment,
 } from "@mui/material";
 //import axios from "axios";
 import { useState } from "react";
@@ -29,7 +30,11 @@ import Avatar from "@mui/material/Avatar";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { useEffect } from "react";
 import dayjs from "dayjs";
-import { DateTimePicker, MobileDateTimePicker } from "@mui/x-date-pickers";
+import {
+  CalendarIcon,
+  DateTimePicker,
+  MobileDateTimePicker,
+} from "@mui/x-date-pickers";
 
 const style = {
   position: "absolute",
@@ -56,6 +61,9 @@ export default function CreateAlarmModal() {
   //const bearerToken = useLoggedInStore((state) => state.bearerToken);
   const [dateValue, setDateValue] = useState(dayjs());
   const [checked, setChecked] = useState([]);
+  const [checked2, setChecked2] = useState(false);
+  const [checked3, setChecked3] = useState(false);
+  const [checked4, setChecked4] = useState(false);
   const [alarmType, setAlarmType] = useState("");
   const [users, setUsers] = useState([]);
   const [data, setData] = useState({
@@ -77,6 +85,18 @@ export default function CreateAlarmModal() {
     ]);
   }, []);
   createData(users);
+
+  const handleCheckboxChange = (event) => {
+    setChecked2(event.target.checked);
+  };
+
+  const handleCheckboxChange2 = (event) => {
+    setChecked3(event.target.checked);
+  };
+
+  const handleCheckboxChange3 = (event) => {
+    setChecked4(event.target.checked);
+  };
 
   const handleSelectChange = (event) => {
     setAlarmType(event.target.value);
@@ -111,8 +131,10 @@ export default function CreateAlarmModal() {
       imageId: alarmType,
       dateValue: dateValue,
       usersToSetAlarmFor: checked,
+      isDailyAlarm: checked2,
+      isWeeklyAlarm: checked3,
+      setAlarmForEveryUser: checked4,
     };
-    console.log(checked);
     console.log(alarmData);
 
     /*const config = {
@@ -146,7 +168,12 @@ export default function CreateAlarmModal() {
   return (
     <div>
       <Button
-        style={{ marginBottom: "20px" }}
+        style={{
+          marginTop: "25px",
+          color: "white",
+          fontWeight: "bold",
+          border: "solid 2px",
+        }}
         size="large"
         onClick={handleOpen}
         startIcon={<AddBoxIcon />}
@@ -184,7 +211,7 @@ export default function CreateAlarmModal() {
                 fullWidth
               />
             </Grid>
-            <Grid item md={6}>
+            <Grid item md={12}>
               <InputLabel id="imageId">Alarm type</InputLabel>
               <Select
                 id="imageId"
@@ -201,56 +228,116 @@ export default function CreateAlarmModal() {
                 <MenuItem value={6}>Training</MenuItem>
               </Select>
             </Grid>
-            <Grid item md={12}>
+            <Grid item md={8} marginTop={2}>
               <MobileDateTimePicker
-                label="dato for alarm"
+                label="Dag og tidspunkt for alarm"
                 disablePast={true}
+                slotProps={{
+                  textField: {
+                    fullWidth: true,
+                    InputProps: {
+                      endAdornment: (
+                        <InputAdornment
+                          sx={{
+                            color: "#979797",
+                          }}
+                          position="end"
+                        >
+                          <CalendarIcon />
+                        </InputAdornment>
+                      ),
+                    },
+                  },
+                }}
                 onChange={(newValue) => setDateValue(newValue)}
               />
             </Grid>
-            <Grid item md="12">
-              <List
-                dense
-                sx={{
-                  width: "100%",
-                  maxWidth: 360,
-                  bgcolor: "background.paper",
-                  maxHeight: 200,
-                  overflow: "auto",
-                }}
-              >
-                {users.map((value) => {
-                  const labelId = `checkbox-list-secondary-label-${value.firstName}`;
-                  return (
-                    <ListItem
-                      key={value.id}
-                      secondaryAction={
-                        <Checkbox
-                          edge="end"
-                          onChange={handleToggle(value.id)}
-                          checked={checked.indexOf(value.id) !== -1}
-                          inputProps={{ "aria-labelledby": labelId }}
-                        />
-                      }
-                      disablePadding
-                    >
-                      <ListItemButton>
-                        <ListItemAvatar>
-                          <Avatar
-                            alt={`Avatar n°${value.id + 1}`}
-                            src={`/static/images/avatar/${value.id + 1}.jpg`}
-                          />
-                        </ListItemAvatar>
-                        <ListItemText
-                          id={labelId}
-                          primary={`${value.firstName}`}
-                        />
-                      </ListItemButton>
-                    </ListItem>
-                  );
-                })}
-              </List>
+            {!checked3 ? (
+              <Grid item md="2">
+                <Typography style={{ marginLeft: "15px" }}>Dagligt</Typography>
+                <Checkbox
+                  label="Aktiv"
+                  checked={checked2}
+                  size="large"
+                  style={{ marginLeft: "25px" }}
+                  onChange={handleCheckboxChange}
+                  inputProps={{ "aria-label": "controlled" }}
+                />
+              </Grid>
+            ) : null}
+            {!checked2 ? (
+              <Grid item md="2">
+                <Typography style={{ marginLeft: "15px" }}>
+                  Ugentligt
+                </Typography>
+                <Checkbox
+                  label="Aktiv"
+                  checked={checked3}
+                  size="large"
+                  style={{ marginLeft: "25px" }}
+                  onChange={handleCheckboxChange2}
+                  inputProps={{ "aria-label": "controlled" }}
+                />
+              </Grid>
+            ) : null}
+            <Grid item md="6">
+              <Typography style={{ marginLeft: "15px" }}>
+                Sæt alarm for alle beboer
+              </Typography>
+              <Checkbox
+                label="Aktiv"
+                checked={checked4}
+                size="large"
+                style={{ marginLeft: "25px" }}
+                onChange={handleCheckboxChange3}
+                inputProps={{ "aria-label": "controlled" }}
+              />
             </Grid>
+            {!checked4 ? (
+              <Grid item md="10">
+                <List
+                  dense
+                  sx={{
+                    width: "100%",
+                    maxWidth: 360,
+                    bgcolor: "background.paper",
+                    maxHeight: 200,
+                    overflow: "auto",
+                  }}
+                >
+                  {users.map((value) => {
+                    const labelId = `checkbox-list-secondary-label-${value.firstName}`;
+                    return (
+                      <ListItem
+                        key={value.id}
+                        secondaryAction={
+                          <Checkbox
+                            edge="end"
+                            onChange={handleToggle(value.id)}
+                            checked={checked.indexOf(value.id) !== -1}
+                            inputProps={{ "aria-labelledby": labelId }}
+                          />
+                        }
+                        disablePadding
+                      >
+                        <ListItemButton>
+                          <ListItemAvatar>
+                            <Avatar
+                              alt={value.firstName}
+                              src={`/static/images/avatar/1.jpg`}
+                            />
+                          </ListItemAvatar>
+                          <ListItemText
+                            id={labelId}
+                            primary={`${value.firstName}`}
+                          />
+                        </ListItemButton>
+                      </ListItem>
+                    );
+                  })}
+                </List>
+              </Grid>
+            ) : null}
             <Grid item md="12">
               <Button
                 type="submit"
