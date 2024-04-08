@@ -10,7 +10,7 @@ import {
   FormControl,
   InputAdornment,
 } from "@mui/material";
-//import axios from "axios";
+import axios from "axios";
 import { useState } from "react";
 import Modal from "@mui/material/Modal";
 import * as React from "react";
@@ -137,16 +137,16 @@ export default function CreateAlarmModal() {
     };
     console.log(alarmData);
 
-    /*const config = {
+    const config = {
       headers: {
         "ngrok-skip-browser-warning": 1,
-        Authorization: `Bearer ${bearerToken}`,
+        //Authorization: `Bearer ${bearerToken}`,
       },
     };
 
     axios
       .post(
-        "https://deep-wealthy-roughy.ngrok-free.app/Alarms/",
+        "https://deep-wealthy-roughy.ngrok-free.app/alarm",
         alarmData,
         config
       )
@@ -159,7 +159,7 @@ export default function CreateAlarmModal() {
       })
       .catch((error) => {
         console.log(error.response);
-      });*/
+      });
   }
 
   const [open, setOpen] = useState(false);
@@ -169,7 +169,7 @@ export default function CreateAlarmModal() {
     <div>
       <Button
         style={{
-          marginTop: "25px",
+          marginTop: "10px",
           color: "white",
           fontWeight: "bold",
           border: "solid 2px",

@@ -1,5 +1,5 @@
 import { Grid, TextField, Typography, Box, Button } from "@mui/material";
-//import axios from "axios";
+import axios from "axios";
 import { useState } from "react";
 import Modal from "@mui/material/Modal";
 import * as React from "react";
@@ -48,35 +48,30 @@ export default function CreateUserModal() {
       firstName: data.firstName,
       lastName: data.lastName,
       room: data.room,
-      active: data.active,
+      active: true,
       points: data.points,
-      contactPersonId: true,
+      contactPersonId: data.contactPersonId,
     };
 
-    /*
     const config = {
       headers: {
         "ngrok-skip-browser-warning": 1,
-        Authorization: `Bearer ${bearerToken}`,
+        // Authorization: `Bearer ${bearerToken}`,
       },
     };
-
+    console.log(userData);
     axios
-      .post(
-        "https://deep-wealthy-roughy.ngrok-free.app/Character/",
-        userData,
-        config
-      )
+      .post("https://deep-wealthy-roughy.ngrok-free.app/user", userData, config)
       .then((response) => {
         if (response.status === 201) {
-          window.location.reload(false);
+          window.location.reload(true);
         } else {
           console.log("failed" + response.status);
         }
       })
       .catch((error) => {
         console.log(error.response);
-      });*/
+      });
   }
 
   const [open, setOpen] = useState(false);

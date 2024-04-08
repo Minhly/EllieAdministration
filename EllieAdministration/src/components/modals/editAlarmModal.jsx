@@ -9,6 +9,7 @@ import Checkbox from "@mui/material/Checkbox";
 //import "../layout/register.css";
 import EditIcon from "@mui/icons-material/Edit";
 //import { useLoggedInStore } from "../components/zustandStore";
+import axios from "axios";
 
 const style = {
   position: "absolute",
@@ -23,18 +24,15 @@ const style = {
 };
 
 export default function EditAlarmModal(props) {
-  const [checked, setChecked] = useState(props.user.active);
-  const handleCalendarClose = () => console.log("Calendar closed");
-  const handleCalendarOpen = () => console.log("Calendar opened");
-  const [date, setDate] = useState(new Date(props.user.dateOfBirth));
+  const [checked, setChecked] = useState(props.alarm.active);
+  const [date, setDate] = useState(new Date(props.alarm.dateOfBirth));
   //const bearerToken = useLoggedInStore((state) => state.bearerToken);
   const [data, setData] = useState({
-    firstName: "",
-    lastName: "",
-    email: "",
-    password: "",
-    role: "",
-    instituteId: 1,
+    name: "",
+    imageUrl: "",
+    description: "",
+    alarmtype: "",
+    activatingTime: "",
   });
 
   const handleChange = (e) => {
@@ -52,54 +50,55 @@ export default function EditAlarmModal(props) {
   function handleSubmit(e) {
     e.preventDefault();
 
-    const employeeData = {
-      id: props.user.id,
-      firstname:
-        data.firstname == null || data.firstname.length < 1
-          ? props.user.firstName
-          : data.firstname,
-      lastname:
-        data.lastname == null || data.lastname.length < 1
-          ? props.user.lastName
-          : data.lastname,
-      email:
-        data.email == null || data.email.length < 1
-          ? props.user.email
-          : data.email,
-      role:
-        data.role == null || data.role.length < 1 ? props.user.role : data.role,
-      instituteId:
-        data.instituteId == null || data.instituteId.length < 1
-          ? props.user.instituteId
-          : data.instituteId,
-      passwordHash: props.user.passwordHash,
-      passwordSalt: props.user.passwordSalt,
+    const alarmData = {
+      id: props.alarm.id,
+      name:
+        data.name == null || data.name.length < 1
+          ? props.alarm.name
+          : data.name,
+      imageUrl:
+        data.imageUrl == null || data.imageUrl.length < 1
+          ? props.alarm.imageUrl
+          : data.imageUrl,
+      description:
+        data.description == null || data.description.length < 1
+          ? props.alarm.description
+          : data.description,
+      alarmType:
+        data.alarmType == null || data.alarmType.length < 1
+          ? props.alarm.alarmType
+          : data.alarmType,
+      activatingTime:
+        data.activatingTime == null || data.activatingTime.length < 1
+          ? props.alarm.activatingTime
+          : data.activatingTime,
     };
 
-    /* 
+    console.log(alarmData);
+
     const config = {
       headers: {
         "ngrok-skip-browser-warning": 1,
-        Authorization: `Bearer ${bearerToken}`,
+        //Authorization: `Bearer ${bearerToken}`,
       },
     };
 
-       axios
+    axios
       .put(
-        "https://deep-wealthy-roughy.ngrok-free.app/User/" + props.user.id,
-        employeeData,
+        "https://deep-wealthy-roughy.ngrok-free.app/alarm?id=" + props.alarm.id,
+        alarmData,
         config
       )
       .then((response) => {
-        if (response.status === 204) {
-          window.location.reload(false);
+        if (response.status === 200) {
+          window.location.reload(true);
         } else {
           console.log("failed" + response.status);
         }
       })
       .catch((error) => {
         console.log(error.response);
-      });*/
+      });
   }
 
   const [open, setOpen] = useState(false);
@@ -108,7 +107,6 @@ export default function EditAlarmModal(props) {
   return (
     <div>
       <Button onClick={handleOpen} startIcon={<EditIcon />} />
-      Alarm
       <Modal
         open={open}
         onClose={handleClose}
@@ -116,17 +114,17 @@ export default function EditAlarmModal(props) {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style} component="form" onSubmit={handleSubmit} noValidate>
-          <Typography variant="h5">BrugerId: {props.user.id}</Typography>
+          <Typography variant="h5">AlarmId: {props.alarm.id}</Typography>
           <Grid container md="12">
             <Grid item md="6">
               <TextField
                 margin="normal"
                 required
-                name="firstname"
-                defaultValue={props.user.firstName}
-                label="Fornavn"
+                name="name"
+                defaultValue={props.alarm.name}
+                label="Alarm navn"
                 onChange={handleChange}
-                id="firstname"
+                id="name"
                 style={{ width: "100%" }}
               />
             </Grid>
@@ -134,10 +132,10 @@ export default function EditAlarmModal(props) {
               <TextField
                 margin="normal"
                 required
-                name="lastname"
-                defaultValue={props.user.lastName}
-                label="Efternavn"
-                id="lastname"
+                name="imageUrl"
+                defaultValue={props.alarm.imageUrl}
+                label="Billede"
+                id="imageUrl"
                 onChange={handleChange}
                 style={{ width: "95%", marginLeft: "10px" }}
               />
@@ -146,10 +144,10 @@ export default function EditAlarmModal(props) {
               <TextField
                 margin="normal"
                 required
-                name="role"
-                defaultValue={props.user.role}
-                label="Rolle"
-                id="role"
+                name="alarmType"
+                defaultValue={props.alarm.alarmType}
+                label="Alarm type"
+                id="alarmType"
                 onChange={handleChange}
                 style={{ width: "100%" }}
               />
@@ -158,11 +156,11 @@ export default function EditAlarmModal(props) {
               <TextField
                 margin="normal"
                 required
-                name="email"
-                label="Email"
-                id="email"
+                name="description"
+                label="Beskrivelse"
+                id="description"
                 onChange={handleChange}
-                defaultValue={props.user.email}
+                defaultValue={props.alarm.description}
                 style={{ width: "95%", marginLeft: "10px" }}
               />
             </Grid>
@@ -170,24 +168,12 @@ export default function EditAlarmModal(props) {
               <TextField
                 margin="normal"
                 required
-                name="instituteId"
-                label="Institut"
+                name="activatingTime"
+                label="Alarm"
                 onChange={handleChange}
-                id="instituteId"
-                defaultValue={props.user.instituteId}
+                id="activatingTime"
+                defaultValue={props.alarm.activatingTime}
                 style={{ width: "100%" }}
-              />
-            </Grid>
-            <Grid item md="6">
-              <TextField
-                margin="normal"
-                required
-                name="password"
-                defaultValue={props.user.password}
-                label="Kodeord"
-                id="password"
-                onChange={handleChange}
-                style={{ width: "95%", marginLeft: "10px" }}
               />
             </Grid>
             <Grid item md="12">
@@ -204,7 +190,7 @@ export default function EditAlarmModal(props) {
                   backgroundColor: "#5e90c1",
                 }}
               >
-                Gem medarbejder
+                Gem alarm
               </Button>
             </Grid>
           </Grid>

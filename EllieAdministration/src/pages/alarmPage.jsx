@@ -16,6 +16,7 @@ import { useEffect, useState } from "react";
 import EditUserModal from "../components/modals/editUserModal";
 import CreateAlarmModal from "../components/modals/createAlarmModal";
 import axios from "axios";
+import EditAlarmModal from "../components/modals/editAlarmModal";
 
 function createData(id, name, activateAlarm, description, image) {
   return {
@@ -69,7 +70,7 @@ function AlarmPage() {
           })}
           style={{
             width: "100%",
-            height: "100px",
+            height: "70px",
             backgroundColor: "#85B585",
             borderTopRightRadius: "5px",
             borderTopLeftRadius: "5px",
@@ -128,7 +129,7 @@ function AlarmPage() {
                   <TableCell align="left">{row.description}</TableCell>
                   <TableCell align="left">{row.activatingTime}</TableCell>
                   <TableCell align="left">
-                    <EditUserModal user={row} />
+                    <EditAlarmModal alarm={row} />
                   </TableCell>
                 </TableRow>
               ))}

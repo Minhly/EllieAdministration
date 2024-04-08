@@ -1,5 +1,5 @@
 import { Grid, TextField, Typography, Box, Button } from "@mui/material";
-//import axios from "axios";
+import axios from "axios";
 import { useState } from "react";
 import Modal from "@mui/material/Modal";
 import * as React from "react";
@@ -72,32 +72,30 @@ export default function EditUserModal(props) {
       active: checked,
     };
 
-    /* 
     const config = {
       headers: {
         "ngrok-skip-browser-warning": 1,
-        Authorization: `Bearer ${bearerToken}`,
+        //Authorization: `Bearer ${bearerToken}`,
       },
     };
 
-       axios
+    axios
       .put(
-        "https://deep-wealthy-roughy.ngrok-free.app/User/" + props.user.id,
+        "https://deep-wealthy-roughy.ngrok-free.app/user?id=" + props.user.id,
         userData,
         config
       )
       .then((response) => {
-        if (response.status === 204) {
-          window.location.reload(false);
+        if (response.status === 200) {
+          window.location.reload(true);
         } else {
           console.log("failed" + response.status);
         }
       })
       .catch((error) => {
         console.log(error.response);
-      });*/
+      });
   }
-
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -117,11 +115,11 @@ export default function EditUserModal(props) {
               <TextField
                 margin="normal"
                 required
-                name="points"
-                defaultValue={props.user.points}
-                label="Point"
-                id="points"
+                name="firstname"
+                defaultValue={props.user.firstName}
+                label="Fornavn"
                 onChange={handleChange}
+                id="firstname"
                 style={{ width: "100%" }}
               />
             </Grid>
@@ -129,11 +127,11 @@ export default function EditUserModal(props) {
               <TextField
                 margin="normal"
                 required
-                name="firstname"
-                defaultValue={props.user.firstName}
-                label="Fornavn"
+                name="points"
+                defaultValue={props.user.points}
+                label="Point"
+                id="points"
                 onChange={handleChange}
-                id="firstname"
                 style={{ width: "95%", marginLeft: "10px" }}
               />
             </Grid>
