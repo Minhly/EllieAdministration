@@ -16,6 +16,7 @@ import { useEffect, useState } from "react";
 import EditUserModal from "../components/modals/editUserModal";
 import CreateUserModal from "../components/modals/createUserModal";
 import axios from "axios";
+import UserAlarmsModal from "../components/modals/userAlarmsModal";
 
 function createData(
   id,
@@ -73,19 +74,20 @@ function EditUser() {
       </Grid>
       <Grid item md={2}></Grid>
       <Grid item md={8}>
-        <CreateUserModal />
         <div
           sx={(theme) => ({
             background: theme.palette.greenx.main,
           })}
           style={{
             width: "100%",
-            height: "30px",
+            height: "70px",
             backgroundColor: "#85B585",
             borderTopRightRadius: "5px",
             borderTopLeftRadius: "5px",
           }}
-        ></div>
+        >
+          <CreateUserModal />
+        </div>
         <TableContainer component={Paper}>
           <Table sx={{ minWidth: 650 }} aria-label="simple table">
             <TableHead>
@@ -133,6 +135,7 @@ function EditUser() {
                   Aktiv
                 </TableCell>
                 <TableCell align="left"></TableCell>
+                <TableCell align="left"></TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -149,9 +152,12 @@ function EditUser() {
                   <TableCell align="left">{row.room}</TableCell>
                   <TableCell align="left">{row.points}</TableCell>
                   <TableCell align="left">{row.contactPersonId}</TableCell>
-                  <TableCell align="left">{row.active}</TableCell>
+                  <TableCell align="left">{row.active.toString()}</TableCell>
                   <TableCell align="left">
-                    <EditUserModal user={row} />
+                    <UserAlarmsModal user={row} />
+                  </TableCell>
+                  <TableCell align="left">
+                    <EditUserModal user={row} setUsers={setUsers} />
                   </TableCell>
                 </TableRow>
               ))}

@@ -80,7 +80,12 @@ export default function CreateUserModal() {
   return (
     <div>
       <Button
-        style={{ marginBottom: "20px" }}
+        style={{
+          marginTop: "10px",
+          color: "white",
+          fontWeight: "bold",
+          border: "solid 2px",
+        }}
         size="large"
         onClick={handleOpen}
         startIcon={<AddBoxIcon />}

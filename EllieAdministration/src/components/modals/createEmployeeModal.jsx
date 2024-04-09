@@ -1,5 +1,5 @@
 import { Grid, TextField, Typography, Box, Button } from "@mui/material";
-//import axios from "axios";
+import axios from "axios";
 import { useState } from "react";
 import Modal from "@mui/material/Modal";
 import * as React from "react";
@@ -53,19 +53,16 @@ export default function CreateEmployeeModal() {
       instituteId: data.instituteId,
     };
 
-    console.log(employeeData);
-
-    /*
     const config = {
       headers: {
         "ngrok-skip-browser-warning": 1,
-        Authorization: `Bearer ${bearerToken}`,
+        //Authorization: `Bearer ${bearerToken}`,
       },
     };
 
     axios
       .post(
-        "https://deep-wealthy-roughy.ngrok-free.app/Character/",
+        "https://deep-wealthy-roughy.ngrok-free.app/employee",
         employeeData,
         config
       )
@@ -78,7 +75,7 @@ export default function CreateEmployeeModal() {
       })
       .catch((error) => {
         console.log(error.response);
-      });*/
+      });
   }
 
   const [open, setOpen] = useState(false);
@@ -87,7 +84,12 @@ export default function CreateEmployeeModal() {
   return (
     <div>
       <Button
-        style={{ marginBottom: "20px" }}
+        style={{
+          marginTop: "10px",
+          color: "white",
+          fontWeight: "bold",
+          border: "solid 2px",
+        }}
         size="large"
         onClick={handleOpen}
         startIcon={<AddBoxIcon />}

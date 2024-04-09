@@ -1,5 +1,5 @@
 import { Grid, TextField, Typography, Box, Button } from "@mui/material";
-//import axios from "axios";
+import axios from "axios";
 import { useState } from "react";
 import Modal from "@mui/material/Modal";
 import * as React from "react";
@@ -76,30 +76,30 @@ export default function EditEmployeeModal(props) {
       passwordSalt: props.user.passwordSalt,
     };
 
-    /* 
     const config = {
       headers: {
         "ngrok-skip-browser-warning": 1,
-        Authorization: `Bearer ${bearerToken}`,
+        //Authorization: `Bearer ${bearerToken}`,
       },
     };
 
-       axios
+    axios
       .put(
-        "https://deep-wealthy-roughy.ngrok-free.app/User/" + props.user.id,
+        "https://deep-wealthy-roughy.ngrok-free.app/employee?id=" +
+          props.user.id,
         employeeData,
         config
       )
       .then((response) => {
-        if (response.status === 204) {
-          window.location.reload(false);
+        if (response.status === 200) {
+          window.location.reload(true);
         } else {
           console.log("failed" + response.status);
         }
       })
       .catch((error) => {
         console.log(error.response);
-      });*/
+      });
   }
 
   const [open, setOpen] = useState(false);

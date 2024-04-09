@@ -87,7 +87,9 @@ export default function EditUserModal(props) {
       )
       .then((response) => {
         if (response.status === 200) {
-          window.location.reload(true);
+          props.setUsers(userData);
+          //handleClose();
+          //window.location.reload(true);
         } else {
           console.log("failed" + response.status);
         }
