@@ -93,37 +93,37 @@ function EmployeePage() {
               <TableRow>
                 <TableCell
                   align="left"
-                  sx={{ fontWeight: "bold", color: "#5e90c1" }}
+                  sx={{ fontWeight: "bold", color: "#85B585" }}
                 >
                   Id
                 </TableCell>
                 <TableCell
                   align="left"
-                  sx={{ fontWeight: "bold", color: "#5e90c1" }}
+                  sx={{ fontWeight: "bold", color: "#85B585" }}
                 >
                   Fornavn
                 </TableCell>
                 <TableCell
                   align="left"
-                  sx={{ fontWeight: "bold", color: "#5e90c1" }}
+                  sx={{ fontWeight: "bold", color: "#85B585" }}
                 >
                   Efternavn
                 </TableCell>
                 <TableCell
                   align="left"
-                  sx={{ fontWeight: "bold", color: "#5e90c1" }}
+                  sx={{ fontWeight: "bold", color: "#85B585" }}
                 >
                   Email
                 </TableCell>
                 <TableCell
                   align="left"
-                  sx={{ fontWeight: "bold", color: "#5e90c1" }}
+                  sx={{ fontWeight: "bold", color: "#85B585" }}
                 >
                   Rolle
                 </TableCell>
                 <TableCell
                   align="left"
-                  sx={{ fontWeight: "bold", color: "#5e90c1" }}
+                  sx={{ fontWeight: "bold", color: "#85B585" }}
                 >
                   Institut
                 </TableCell>
@@ -142,7 +142,7 @@ function EmployeePage() {
                   <TableCell align="left">{row.firstName}</TableCell>
                   <TableCell align="left">{row.lastName}</TableCell>
                   <TableCell align="left">{row.email}</TableCell>
-                  <TableCell align="left">{row.role}</TableCell>
+                  <TableCell align="left">{row.roleId}</TableCell>
                   <TableCell align="left">{row.instituteId}</TableCell>
                   <TableCell align="left">
                     <EditEmployeeModal user={row} />

@@ -103,6 +103,7 @@ button:focus-visible {
 }
 
 .css-np5i73 {
-  border-right-width: 2px !important;
+  border-right-width: 0px !important;
+  border-bottom: solid 30px;
   border-color: #85b585 !important;
 }

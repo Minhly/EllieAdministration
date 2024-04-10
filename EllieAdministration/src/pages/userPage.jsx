@@ -94,43 +94,43 @@ function EditUser() {
               <TableRow>
                 <TableCell
                   align="left"
-                  sx={{ fontWeight: "bold", color: "#5e90c1" }}
+                  sx={{ fontWeight: "bold", color: "#85B585" }}
                 >
                   Id
                 </TableCell>
                 <TableCell
                   align="left"
-                  sx={{ fontWeight: "bold", color: "#5e90c1" }}
+                  sx={{ fontWeight: "bold", color: "#85B585" }}
                 >
                   Fornavn
                 </TableCell>
                 <TableCell
                   align="left"
-                  sx={{ fontWeight: "bold", color: "#5e90c1" }}
+                  sx={{ fontWeight: "bold", color: "#85B585" }}
                 >
                   Efternavn
                 </TableCell>
                 <TableCell
                   align="left"
-                  sx={{ fontWeight: "bold", color: "#5e90c1" }}
+                  sx={{ fontWeight: "bold", color: "#85B585" }}
                 >
                   Værelse
                 </TableCell>
                 <TableCell
                   align="left"
-                  sx={{ fontWeight: "bold", color: "#5e90c1" }}
+                  sx={{ fontWeight: "bold", color: "#85B585" }}
                 >
                   Point
                 </TableCell>
                 <TableCell
                   align="left"
-                  sx={{ fontWeight: "bold", color: "#5e90c1" }}
+                  sx={{ fontWeight: "bold", color: "#85B585" }}
                 >
                   Kontaktperson
                 </TableCell>
                 <TableCell
                   align="left"
-                  sx={{ fontWeight: "bold", color: "#5e90c1" }}
+                  sx={{ fontWeight: "bold", color: "#85B585" }}
                 >
                   Aktiv
                 </TableCell>

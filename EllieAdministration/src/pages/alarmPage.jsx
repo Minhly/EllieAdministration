@@ -17,6 +17,7 @@ import EditUserModal from "../components/modals/editUserModal";
 import CreateAlarmModal from "../components/modals/createAlarmModal";
 import axios from "axios";
 import EditAlarmModal from "../components/modals/editAlarmModal";
+import AccessAlarmIcon from "@mui/icons-material/AccessAlarm";
 
 function createData(id, name, activateAlarm, description, image) {
   return {
@@ -49,6 +50,7 @@ function AlarmPage() {
       })
       .catch((err) => console.log(err));
   }, []);
+
   console.log(alarms);
   createData(alarms);
   return (
@@ -60,7 +62,7 @@ function AlarmPage() {
       alignItems="flex-start"
     >
       <Grid item md={12}>
-        <TopTitleComponent title="Alarmer" />
+        <TopTitleComponent title="Alarmer" icon={<AccessAlarmIcon />} />
       </Grid>
       <Grid item md={2}></Grid>
       <Grid item md={8}>
@@ -84,31 +86,31 @@ function AlarmPage() {
               <TableRow>
                 <TableCell
                   align="left"
-                  sx={{ fontWeight: "bold", color: "#5e90c1" }}
+                  sx={{ fontWeight: "bold", color: "#85B585" }}
                 >
                   Image
                 </TableCell>
                 <TableCell
                   align="left"
-                  sx={{ fontWeight: "bold", color: "#5e90c1" }}
+                  sx={{ fontWeight: "bold", color: "#85B585" }}
                 >
                   Id
                 </TableCell>
                 <TableCell
                   align="left"
-                  sx={{ fontWeight: "bold", color: "#5e90c1" }}
+                  sx={{ fontWeight: "bold", color: "#85B585" }}
                 >
                   Title
                 </TableCell>
                 <TableCell
                   align="left"
-                  sx={{ fontWeight: "bold", color: "#5e90c1" }}
+                  sx={{ fontWeight: "bold", color: "#85B585" }}
                 >
                   Beskrivelse
                 </TableCell>
                 <TableCell
                   align="left"
-                  sx={{ fontWeight: "bold", color: "#5e90c1" }}
+                  sx={{ fontWeight: "bold", color: "#85B585" }}
                 >
                   Alarm ringer
                 </TableCell>
