@@ -1,4 +1,13 @@
-import { Grid, TextField, Typography, Box, Button } from "@mui/material";
+import {
+  Grid,
+  TextField,
+  Typography,
+  Box,
+  Button,
+  InputLabel,
+  Select,
+  MenuItem,
+} from "@mui/material";
 import axios from "axios";
 import { useState } from "react";
 import Modal from "@mui/material/Modal";
@@ -23,13 +32,14 @@ const style = {
 };
 
 export default function CreateEmployeeModal() {
+  const [roleA, setRole] = useState("");
   //const bearerToken = useLoggedInStore((state) => state.bearerToken);
   const [data, setData] = useState({
     firstName: "",
     lastName: "",
     email: "",
     password: "",
-    role: "",
+    role: 1,
     instituteId: 1,
   });
 
@@ -41,6 +51,10 @@ export default function CreateEmployeeModal() {
     });
   };
 
+  const handleSelectChange = (event) => {
+    setRole(event.target.value);
+  };
+
   function handleSubmit(e) {
     e.preventDefault();
 
@@ -49,9 +63,11 @@ export default function CreateEmployeeModal() {
       lastName: data.lastName,
       email: data.email,
       password: data.password,
-      role: data.role,
+      role: roleA,
       instituteId: data.instituteId,
     };
+
+    console.log(employeeData);
 
     const config = {
       headers: {
@@ -68,7 +84,7 @@ export default function CreateEmployeeModal() {
       )
       .then((response) => {
         if (response.status === 201) {
-          window.location.reload(false);
+          window.location.reload(true);
         } else {
           console.log("failed" + response.status);
         }
@@ -86,9 +102,10 @@ export default function CreateEmployeeModal() {
       <Button
         style={{
           marginTop: "10px",
-          color: "white",
+          color: "green",
           fontWeight: "bold",
           border: "solid 2px",
+          backgroundColor: "#C1E1C1",
         }}
         size="large"
         onClick={handleOpen}
@@ -150,25 +167,27 @@ export default function CreateEmployeeModal() {
               />
             </Grid>
             <Grid item md={6}>
-              <TextField
-                margin="normal"
-                required
-                name="role"
-                label="Rolle"
+              <InputLabel id="imageId">Rolle</InputLabel>
+              <Select
                 id="role"
-                onChange={handleChange}
+                name="role"
+                onChange={handleSelectChange}
                 style={{ width: "100%" }}
-              />
+              >
+                <MenuItem value={1}>Admin</MenuItem>
+                <MenuItem value={2}>Pædagog</MenuItem>
+              </Select>
             </Grid>
-            <Grid item md={6}>
+            <Grid item md={12}>
               <TextField
                 margin="normal"
                 required
+                type="number"
                 name="institute"
                 label="Institut"
                 onChange={handleChange}
                 id="institute"
-                style={{ width: "95%", marginLeft: "10px" }}
+                style={{ width: "50%" }}
               />
             </Grid>
             <Grid item md="12">
@@ -182,7 +201,7 @@ export default function CreateEmployeeModal() {
                   mb: 2,
                   paddingTop: "10px",
                   paddingBottom: "10px",
-                  backgroundColor: "#5e90c1",
+                  backgroundColor: "#85B585",
                 }}
               >
                 Opret medarbejder

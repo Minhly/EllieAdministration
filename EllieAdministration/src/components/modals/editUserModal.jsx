@@ -4,9 +4,6 @@ import { useState } from "react";
 import Modal from "@mui/material/Modal";
 import * as React from "react";
 import Checkbox from "@mui/material/Checkbox";
-//import DatePicker from "react-datepicker";
-//import "react-datepicker/dist/react-datepicker.css";
-//import "../layout/register.css";
 import EditIcon from "@mui/icons-material/Edit";
 //import { useLoggedInStore } from "../components/zustandStore";
 
@@ -87,9 +84,9 @@ export default function EditUserModal(props) {
       )
       .then((response) => {
         if (response.status === 200) {
-          props.setUsers(userData);
+          //props.setUsers(userData);
           //handleClose();
-          //window.location.reload(true);
+          window.location.reload(true);
         } else {
           console.log("failed" + response.status);
         }
@@ -103,7 +100,7 @@ export default function EditUserModal(props) {
   const handleClose = () => setOpen(false);
   return (
     <div>
-      <Button onClick={handleOpen} startIcon={<EditIcon />} />
+      <Button onClick={handleOpen} startIcon={<EditIcon color={"success"} />} />
       <Modal
         open={open}
         onClose={handleClose}
@@ -197,7 +194,7 @@ export default function EditUserModal(props) {
                   mb: 2,
                   paddingTop: "10px",
                   paddingBottom: "10px",
-                  backgroundColor: "#5e90c1",
+                  backgroundColor: "#85B585",
                 }}
               >
                 Gem Bruger

@@ -118,7 +118,7 @@ export default function CreateAlarmModal() {
     e.preventDefault();
     const alarmData = {
       name: data.name,
-      activatingTime: dateValue,
+      activatingTime: !dailyCheck && !weeklyCheck ? dateValue : timeValue,
       description: data.description,
       imageUrl: "data.imageUrl",
       alarmTypeId: !dailyCheck && !weeklyCheck ? 1 : dailyCheck ? 2 : 3,
@@ -178,9 +178,10 @@ export default function CreateAlarmModal() {
       <Button
         style={{
           marginTop: "10px",
-          color: "white",
+          color: "green",
           fontWeight: "bold",
           border: "solid 2px",
+          backgroundColor: "#C1E1C1",
         }}
         size="large"
         onClick={handleOpen}
@@ -213,7 +214,7 @@ export default function CreateAlarmModal() {
                 id="description"
                 name="description"
                 onChange={handleChange}
-                label="Note"
+                label="Beskrivelse"
                 multiline
                 rows={5}
                 fullWidth
@@ -224,7 +225,6 @@ export default function CreateAlarmModal() {
               <Select
                 id="imageId"
                 name="imageId"
-                defaultValue={1}
                 onChange={handleSelectChange}
                 style={{ width: "100%" }}
               >
@@ -268,7 +268,6 @@ export default function CreateAlarmModal() {
               <Grid item md={8} marginTop={2}>
                 <MobileTimePicker
                   label="Tidspunkt for alarm"
-                  disablePast={true}
                   ampm={false}
                   slotProps={{
                     textField: {
@@ -319,10 +318,8 @@ export default function CreateAlarmModal() {
                 />
               </Grid>
             ) : null}
-            <Grid item md="6">
-              <Typography style={{ marginLeft: "15px" }}>
-                Sæt alarm for alle beboer
-              </Typography>
+            <Grid item md="12">
+              <Typography>Sæt alarm for alle beboer</Typography>
               <Checkbox
                 label="Aktiv"
                 checked={checked4}
@@ -339,6 +336,8 @@ export default function CreateAlarmModal() {
                   sx={{
                     width: "100%",
                     maxWidth: 360,
+                    border: 1,
+                    padding: 2,
                     bgcolor: "background.paper",
                     maxHeight: 200,
                     overflow: "auto",
@@ -352,6 +351,7 @@ export default function CreateAlarmModal() {
                         secondaryAction={
                           <Checkbox
                             edge="end"
+                            color="success"
                             onChange={handleToggle(value.id)}
                             checked={checked.indexOf(value.id) !== -1}
                             inputProps={{ "aria-labelledby": labelId }}
@@ -388,7 +388,7 @@ export default function CreateAlarmModal() {
                   mb: 2,
                   paddingTop: "10px",
                   paddingBottom: "10px",
-                  backgroundColor: "#5e90c1",
+                  backgroundColor: "#85B585",
                 }}
               >
                 Opret alarm

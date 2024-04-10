@@ -19,7 +19,7 @@ import Modal from "@mui/material/Modal";
 import * as React from "react";
 import EditIcon from "@mui/icons-material/Edit";
 //import { useLoggedInStore } from "../components/zustandStore";
-import EventNoteIcon from '@mui/icons-material/EventNote';
+import EventNoteIcon from "@mui/icons-material/EventNote";
 
 function createData(
   id,
@@ -104,7 +104,10 @@ export default function UserAlarmsModal(props) {
   const handleClose = () => setOpen(false);
   return (
     <div>
-      <Button onClick={handleOpen} startIcon={<EventNoteIcon />} />
+      <Button
+        onClick={handleOpen}
+        startIcon={<EventNoteIcon color={"success"} />}
+      />
       <Modal
         open={open}
         onClose={handleClose}
@@ -120,37 +123,37 @@ export default function UserAlarmsModal(props) {
                   <TableRow>
                     <TableCell
                       align="left"
-                      sx={{ fontWeight: "bold", color: "#5e90c1" }}
+                      sx={{ fontWeight: "bold", color: "#85B585" }}
                     >
                       Id
                     </TableCell>
                     <TableCell
                       align="left"
-                      sx={{ fontWeight: "bold", color: "#5e90c1" }}
+                      sx={{ fontWeight: "bold", color: "#85B585" }}
                     >
                       Brugernavn
                     </TableCell>
                     <TableCell
                       align="left"
-                      sx={{ fontWeight: "bold", color: "#5e90c1" }}
+                      sx={{ fontWeight: "bold", color: "#85B585" }}
                     >
                       Fornavn
                     </TableCell>
                     <TableCell
                       align="left"
-                      sx={{ fontWeight: "bold", color: "#5e90c1" }}
+                      sx={{ fontWeight: "bold", color: "#85B585" }}
                     >
                       Efternavn
                     </TableCell>
                     <TableCell
                       align="left"
-                      sx={{ fontWeight: "bold", color: "#5e90c1" }}
+                      sx={{ fontWeight: "bold", color: "#85B585" }}
                     >
                       Email
                     </TableCell>
                     <TableCell
                       align="left"
-                      sx={{ fontWeight: "bold", color: "#5e90c1" }}
+                      sx={{ fontWeight: "bold", color: "#85B585" }}
                     >
                       Aktiv
                     </TableCell>

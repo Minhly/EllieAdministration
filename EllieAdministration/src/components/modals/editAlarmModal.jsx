@@ -7,6 +7,7 @@ import {
   InputLabel,
   MenuItem,
   Select,
+  InputAdornment,
 } from "@mui/material";
 //import axios from "axios";
 import { useState } from "react";
@@ -19,6 +20,15 @@ import Checkbox from "@mui/material/Checkbox";
 import EditIcon from "@mui/icons-material/Edit";
 //import { useLoggedInStore } from "../components/zustandStore";
 import axios from "axios";
+import dayjs from "dayjs";
+import {
+  CalendarIcon,
+  DateTimePicker,
+  MobileDateTimePicker,
+  MobileTimePicker,
+  TimePicker,
+} from "@mui/x-date-pickers";
+import { useEffect } from "react";
 
 const style = {
   position: "absolute",
@@ -33,9 +43,11 @@ const style = {
 };
 
 export default function EditAlarmModal(props) {
-  const [checked, setChecked] = useState(props.alarm.active);
-  const [date, setDate] = useState(new Date(props.alarm.dateOfBirth));
   const [alarmType, setAlarmType] = useState("");
+  const [dateValue, setDateValue] = useState(dayjs());
+  const [timeValue, setTimeValue] = useState(dayjs());
+  const [dailyCheck, setDailyCheck] = useState(false);
+  const [weeklyCheck, setWeeklyCheck] = useState(false);
   //const bearerToken = useLoggedInStore((state) => state.bearerToken);
   const [data, setData] = useState({
     name: "",
@@ -44,7 +56,7 @@ export default function EditAlarmModal(props) {
     alarmtype: 0,
     activatingTime: "",
   });
-
+  console.log(props);
   const handleChange = (e) => {
     const value = e.target.value;
     setData({
@@ -53,12 +65,22 @@ export default function EditAlarmModal(props) {
     });
   };
 
-  const handleSelectChange = (event) => {
-    setAlarmType(event.target.value);
+  useEffect(() => {
+    if (props.alarm.alarmTypeId == 2) {
+      setDailyCheck(true);
+      console.log("render1");
+    } else if (props.alarm.alarmTypeId == 3) {
+      setWeeklyCheck(true);
+      console.log("render2");
+    }
+  }, []);
+
+  const handleCheckboxChange3 = (event) => {
+    setDailyCheck(event.target.checked);
   };
 
-  const handleCheckboxChange = (event) => {
-    setChecked(event.target.checked);
+  const handleCheckboxChange2 = (event) => {
+    setWeeklyCheck(event.target.checked);
   };
 
   function handleSubmit(e) {
@@ -85,7 +107,9 @@ export default function EditAlarmModal(props) {
       activatingTime:
         data.activatingTime == null || data.activatingTime.length < 1
           ? props.alarm.activatingTime
-          : data.activatingTime,
+          : !dailyCheck && !weeklyCheck
+          ? dateValue
+          : timeValue,
     };
 
     console.log(alarmData);
@@ -120,7 +144,7 @@ export default function EditAlarmModal(props) {
   const handleClose = () => setOpen(false);
   return (
     <div>
-      <Button onClick={handleOpen} startIcon={<EditIcon />} />
+      <Button onClick={handleOpen} startIcon={<EditIcon color={"success"} />} />
       <Modal
         open={open}
         onClose={handleClose}
@@ -154,43 +178,105 @@ export default function EditAlarmModal(props) {
                 style={{ width: "95%", marginLeft: "10px" }}
               />
             </Grid>
-            <Grid item md="6">
+            {!dailyCheck && !weeklyCheck ? (
+              <Grid item md={8} marginTop={2}>
+                <MobileDateTimePicker
+                  label="Dag og tidspunkt for alarm"
+                  disablePast={true}
+                  required
+                  ampm={false}
+                  defaultValue={dayjs(props.alarm.activatingTime)}
+                  closeOnSelect={true}
+                  slotProps={{
+                    textField: {
+                      fullWidth: true,
+                      InputProps: {
+                        endAdornment: (
+                          <InputAdornment
+                            sx={{
+                              color: "#979797",
+                            }}
+                            position="end"
+                          >
+                            <CalendarIcon />
+                          </InputAdornment>
+                        ),
+                      },
+                    },
+                  }}
+                  onChange={(newValue) => setDateValue(newValue)}
+                />
+              </Grid>
+            ) : null}
+            {dailyCheck || weeklyCheck ? (
+              <Grid item md={8} marginTop={2}>
+                <MobileTimePicker
+                  label="Tidspunkt for alarm"
+                  required
+                  defaultValue={dayjs(props.alarm.activatingTime)}
+                  ampm={false}
+                  slotProps={{
+                    textField: {
+                      fullWidth: true,
+                      InputProps: {
+                        endAdornment: (
+                          <InputAdornment
+                            sx={{
+                              color: "#979797",
+                            }}
+                            position="end"
+                          >
+                            <CalendarIcon />
+                          </InputAdornment>
+                        ),
+                      },
+                    },
+                  }}
+                  onChange={(newValue) => setTimeValue(newValue)}
+                />
+              </Grid>
+            ) : null}
+            {!weeklyCheck ? (
+              <Grid item md="2">
+                <Typography style={{ marginLeft: "15px" }}>Dagligt</Typography>
+                <Checkbox
+                  label="Aktiv"
+                  checked={dailyCheck}
+                  size="large"
+                  style={{ marginLeft: "25px" }}
+                  onChange={handleCheckboxChange3}
+                  inputProps={{ "aria-label": "controlled" }}
+                />
+              </Grid>
+            ) : null}
+            {!dailyCheck ? (
+              <Grid item md="2">
+                <Typography style={{ marginLeft: "15px" }}>
+                  Ugentligt
+                </Typography>
+                <Checkbox
+                  label="Aktiv"
+                  checked={weeklyCheck}
+                  size="large"
+                  style={{ marginLeft: "25px" }}
+                  onChange={handleCheckboxChange2}
+                  inputProps={{ "aria-label": "controlled" }}
+                />
+              </Grid>
+            ) : null}
+            <Grid item md="12">
               <TextField
                 margin="normal"
-                required
-                name="activatingTime"
-                label="Alarm"
-                onChange={handleChange}
-                id="activatingTime"
-                defaultValue={props.alarm.activatingTime}
-                style={{ width: "100%" }}
-              />
-            </Grid>
-            <Grid item md="6">
-              <TextField
-                margin="normal"
-                required
                 name="description"
                 label="Beskrivelse"
                 id="description"
+                multiline
+                rows={5}
+                fullWidth
                 onChange={handleChange}
                 defaultValue={props.alarm.description}
-                style={{ width: "95%", marginLeft: "10px" }}
-              />
-            </Grid>
-            <Grid item md="12">
-              <InputLabel id="imageId">Alarm type</InputLabel>
-              <Select
-                id="imageId"
-                name="imageId"
-                defaultValue={props.alarm.alarmTypeId}
-                onChange={handleSelectChange}
                 style={{ width: "100%" }}
-              >
-                <MenuItem value={1}>Specifik dato og tid</MenuItem>
-                <MenuItem value={2}>Daglig</MenuItem>
-                <MenuItem value={3}>Ugentlig</MenuItem>
-              </Select>
+              />
             </Grid>
             <Grid item md="12">
               <Button
@@ -203,7 +289,7 @@ export default function EditAlarmModal(props) {
                   mb: 2,
                   paddingTop: "10px",
                   paddingBottom: "10px",
-                  backgroundColor: "#5e90c1",
+                  backgroundColor: "#85B585",
                 }}
               >
                 Gem alarm

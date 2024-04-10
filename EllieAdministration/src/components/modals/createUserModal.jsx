@@ -1,4 +1,13 @@
-import { Grid, TextField, Typography, Box, Button } from "@mui/material";
+import {
+  Grid,
+  TextField,
+  Typography,
+  Box,
+  Button,
+  InputLabel,
+  Select,
+  MenuItem,
+} from "@mui/material";
 import axios from "axios";
 import { useState } from "react";
 import Modal from "@mui/material/Modal";
@@ -9,6 +18,7 @@ import EditIcon from "@mui/icons-material/Edit";
 //import { useLoggedInStore } from "./zustandStore";
 import AddBoxIcon from "@mui/icons-material/AddBox";
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
+import { useEffect } from "react";
 
 const style = {
   position: "absolute",
@@ -23,6 +33,8 @@ const style = {
 };
 
 export default function CreateUserModal() {
+  const [employeeContact, setEmployeeContact] = useState("");
+  const [employees, setEmployees] = useState([]);
   //const bearerToken = useLoggedInStore((state) => state.bearerToken);
   const [data, setData] = useState({
     firstName: "",
@@ -33,12 +45,35 @@ export default function CreateUserModal() {
     contactPersonId: "",
   });
 
+  const config = {
+    headers: {
+      "ngrok-skip-browser-warning": 1,
+      // Authorization: `Bearer ${bearerToken}`,
+    },
+  };
+
+  const url = "https://deep-wealthy-roughy.ngrok-free.app/employee";
+  useEffect(() => {
+    axios
+      .get(url, config)
+      .then((res) => {
+        setEmployees(res.data);
+      })
+      .catch((err) => console.log(err));
+  }, []);
+
+  console.log(employees);
+
   const handleChange = (e) => {
     const value = e.target.value;
     setData({
       ...data,
       [e.target.name]: value,
     });
+  };
+
+  const handleSelectChange = (event) => {
+    setEmployeeContact(event.target.value);
   };
 
   function handleSubmit(e) {
@@ -50,7 +85,7 @@ export default function CreateUserModal() {
       room: data.room,
       active: true,
       points: data.points,
-      contactPersonId: data.contactPersonId,
+      contactPersonId: employeeContact,
     };
 
     const config = {
@@ -59,7 +94,17 @@ export default function CreateUserModal() {
         // Authorization: `Bearer ${bearerToken}`,
       },
     };
-    console.log(userData);
+
+    const url = "https://deep-wealthy-roughy.ngrok-free.app/employee";
+    useEffect(() => {
+      axios
+        .get(url, config)
+        .then((res) => {
+          setEmployees(res.data);
+        })
+        .catch((err) => console.log(err));
+    }, []);
+
     axios
       .post("https://deep-wealthy-roughy.ngrok-free.app/user", userData, config)
       .then((response) => {
@@ -82,9 +127,10 @@ export default function CreateUserModal() {
       <Button
         style={{
           marginTop: "10px",
-          color: "white",
+          color: "green",
           fontWeight: "bold",
           border: "solid 2px",
+          backgroundColor: "#C1E1C1",
         }}
         size="large"
         onClick={handleOpen}
@@ -134,17 +180,7 @@ export default function CreateUserModal() {
                 style={{ width: "100%" }}
               />
             </Grid>
-            <Grid item md={6}>
-              <TextField
-                margin="normal"
-                required
-                name="contactPersonId"
-                label="Kontaktperson"
-                onChange={handleChange}
-                id="contactPersonId"
-                style={{ width: "95%", marginLeft: "10px" }}
-              />
-            </Grid>
+
             <Grid item md={6}>
               <TextField
                 margin="normal"
@@ -152,9 +188,24 @@ export default function CreateUserModal() {
                 name="points"
                 label="Point"
                 id="points"
+                type="number"
                 onChange={handleChange}
-                style={{ width: "100%" }}
+                style={{ width: "95%", marginLeft: "10px" }}
               />
+            </Grid>
+            <Grid item md={12}>
+              <InputLabel id="contactPersonId">Kontaktperson</InputLabel>
+              <Select
+                id="contactPersonId"
+                name="contactPersonId"
+                required
+                onChange={handleSelectChange}
+                style={{ width: "100%" }}
+              >
+                {employees.map((row) => (
+                  <MenuItem value={row.id}>{row.email}</MenuItem>
+                ))}
+              </Select>
             </Grid>
             <Grid item md="12">
               <Button
@@ -167,7 +218,7 @@ export default function CreateUserModal() {
                   mb: 2,
                   paddingTop: "10px",
                   paddingBottom: "10px",
-                  backgroundColor: "#5e90c1",
+                  backgroundColor: "#85B585",
                 }}
               >
                 Opret bruger

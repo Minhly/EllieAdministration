@@ -107,7 +107,7 @@ export default function EditEmployeeModal(props) {
   const handleClose = () => setOpen(false);
   return (
     <div>
-      <Button onClick={handleOpen} startIcon={<EditIcon />} />
+      <Button onClick={handleOpen} startIcon={<EditIcon color={"success"} />} />
       <Modal
         open={open}
         onClose={handleClose}
@@ -200,7 +200,7 @@ export default function EditEmployeeModal(props) {
                   mb: 2,
                   paddingTop: "10px",
                   paddingBottom: "10px",
-                  backgroundColor: "#5e90c1",
+                  backgroundColor: "#85B585",
                 }}
               >
                 Gem medarbejder
