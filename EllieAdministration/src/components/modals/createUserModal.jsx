@@ -99,7 +99,7 @@ export default function CreateUserModal() {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style} component="form" onSubmit={handleSubmit} noValidate>
-          <Typography variant="h5">Opret Spil</Typography>
+          <Typography variant="h5">Opret Bruger</Typography>
           <Grid container md={12}>
             <Grid item md={6}>
               <TextField

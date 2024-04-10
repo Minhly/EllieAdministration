@@ -59,28 +59,6 @@ function EmployeePage() {
       .catch((err) => console.log(err));
   }, []);
 
-  useEffect(() => {
-    setEmployees([
-      {
-        id: 1,
-        firstName: "David",
-        lastName: "Nederlag",
-        email: "dvg@xd.dk",
-        password: "xd123",
-        role: "Nurse",
-        instituteId: 2,
-      },
-      {
-        id: 2,
-        firstName: "Minh",
-        lastName: "Ly",
-        email: "mvp@xd.dk",
-        password: "xd123",
-        role: "God",
-        instituteId: 2,
-      },
-    ]);
-  }, []);
   createData(employees);
   return (
     <Grid

@@ -34,6 +34,8 @@ import {
   CalendarIcon,
   DateTimePicker,
   MobileDateTimePicker,
+  MobileTimePicker,
+  TimePicker,
 } from "@mui/x-date-pickers";
 
 const style = {
@@ -60,9 +62,10 @@ function createData(id, firstName, lastName, age) {
 export default function CreateAlarmModal() {
   //const bearerToken = useLoggedInStore((state) => state.bearerToken);
   const [dateValue, setDateValue] = useState(dayjs());
+  const [timeValue, setTimeValue] = useState(dayjs());
   const [checked, setChecked] = useState([]);
-  const [checked2, setChecked2] = useState(false);
-  const [checked3, setChecked3] = useState(false);
+  const [dailyCheck, setDailyCheck] = useState(false);
+  const [weeklyCheck, setWeeklyCheck] = useState(false);
   const [checked4, setChecked4] = useState(false);
   const [alarmType, setAlarmType] = useState("");
   const [users, setUsers] = useState([]);
@@ -74,24 +77,12 @@ export default function CreateAlarmModal() {
     usersToSetAlarmFor: "",
   });
 
-  useEffect(() => {
-    setUsers([
-      { id: 13, firstName: "Minh", lastName: "Ly", age: 24 },
-      { id: 24, firstName: "Josephine", lastName: "Bjerg", age: 27 },
-      { id: 132, firstName: "Minh", lastName: "Ly", age: 24 },
-      { id: 243, firstName: "Josephine", lastName: "Bjerg", age: 27 },
-      { id: 134, firstName: "Minh", lastName: "Ly", age: 24 },
-      { id: 245, firstName: "Josephine", lastName: "Bjerg", age: 27 },
-    ]);
-  }, []);
-  createData(users);
-
   const handleCheckboxChange = (event) => {
-    setChecked2(event.target.checked);
+    setDailyCheck(event.target.checked);
   };
 
   const handleCheckboxChange2 = (event) => {
-    setChecked3(event.target.checked);
+    setWeeklyCheck(event.target.checked);
   };
 
   const handleCheckboxChange3 = (event) => {
@@ -127,13 +118,12 @@ export default function CreateAlarmModal() {
     e.preventDefault();
     const alarmData = {
       name: data.name,
+      activatingTime: dateValue,
       description: data.description,
-      imageId: alarmType,
-      dateValue: dateValue,
-      usersToSetAlarmFor: checked,
-      isDailyAlarm: checked2,
-      isWeeklyAlarm: checked3,
-      setAlarmForEveryUser: checked4,
+      imageUrl: "data.imageUrl",
+      alarmTypeId: !dailyCheck && !weeklyCheck ? 1 : dailyCheck ? 2 : 3,
+      //usersToSetAlarmFor: checked,
+      //setAlarmForEveryUser: checked4,
     };
     console.log(alarmData);
 
@@ -152,15 +142,33 @@ export default function CreateAlarmModal() {
       )
       .then((response) => {
         if (response.status === 201) {
-          window.location.reload(false);
+          setUsers(response.data);
+          window.location.reload(true);
         } else {
-          console.log("failed" + response.status);
+          console.log("failed" + response.body);
         }
       })
       .catch((error) => {
         console.log(error.response);
       });
   }
+
+  const config = {
+    headers: {
+      "ngrok-skip-browser-warning": 1,
+      //Authorization: `Bearer ${bearerToken}`,
+    },
+  };
+
+  const url = "https://deep-wealthy-roughy.ngrok-free.app/user";
+  useEffect(() => {
+    axios
+      .get(url, config)
+      .then((res) => {
+        setUsers(res.data);
+      })
+      .catch((err) => console.log(err));
+  }, []);
 
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
@@ -228,36 +236,67 @@ export default function CreateAlarmModal() {
                 <MenuItem value={6}>Training</MenuItem>
               </Select>
             </Grid>
-            <Grid item md={8} marginTop={2}>
-              <MobileDateTimePicker
-                label="Dag og tidspunkt for alarm"
-                disablePast={true}
-                slotProps={{
-                  textField: {
-                    fullWidth: true,
-                    InputProps: {
-                      endAdornment: (
-                        <InputAdornment
-                          sx={{
-                            color: "#979797",
-                          }}
-                          position="end"
-                        >
-                          <CalendarIcon />
-                        </InputAdornment>
-                      ),
+            {!dailyCheck && !weeklyCheck ? (
+              <Grid item md={8} marginTop={2}>
+                <MobileDateTimePicker
+                  label="Dag og tidspunkt for alarm"
+                  disablePast={true}
+                  ampm={false}
+                  closeOnSelect={true}
+                  slotProps={{
+                    textField: {
+                      fullWidth: true,
+                      InputProps: {
+                        endAdornment: (
+                          <InputAdornment
+                            sx={{
+                              color: "#979797",
+                            }}
+                            position="end"
+                          >
+                            <CalendarIcon />
+                          </InputAdornment>
+                        ),
+                      },
                     },
-                  },
-                }}
-                onChange={(newValue) => setDateValue(newValue)}
-              />
-            </Grid>
-            {!checked3 ? (
+                  }}
+                  onChange={(newValue) => setDateValue(newValue)}
+                />
+              </Grid>
+            ) : null}
+            {dailyCheck || weeklyCheck ? (
+              <Grid item md={8} marginTop={2}>
+                <MobileTimePicker
+                  label="Tidspunkt for alarm"
+                  disablePast={true}
+                  ampm={false}
+                  slotProps={{
+                    textField: {
+                      fullWidth: true,
+                      InputProps: {
+                        endAdornment: (
+                          <InputAdornment
+                            sx={{
+                              color: "#979797",
+                            }}
+                            position="end"
+                          >
+                            <CalendarIcon />
+                          </InputAdornment>
+                        ),
+                      },
+                    },
+                  }}
+                  onChange={(newValue) => setTimeValue(newValue)}
+                />
+              </Grid>
+            ) : null}
+            {!weeklyCheck ? (
               <Grid item md="2">
                 <Typography style={{ marginLeft: "15px" }}>Dagligt</Typography>
                 <Checkbox
                   label="Aktiv"
-                  checked={checked2}
+                  checked={dailyCheck}
                   size="large"
                   style={{ marginLeft: "25px" }}
                   onChange={handleCheckboxChange}
@@ -265,14 +304,14 @@ export default function CreateAlarmModal() {
                 />
               </Grid>
             ) : null}
-            {!checked2 ? (
+            {!dailyCheck ? (
               <Grid item md="2">
                 <Typography style={{ marginLeft: "15px" }}>
                   Ugentligt
                 </Typography>
                 <Checkbox
                   label="Aktiv"
-                  checked={checked3}
+                  checked={weeklyCheck}
                   size="large"
                   style={{ marginLeft: "25px" }}
                   onChange={handleCheckboxChange2}

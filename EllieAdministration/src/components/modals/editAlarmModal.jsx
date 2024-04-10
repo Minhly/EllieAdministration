@@ -1,4 +1,13 @@
-import { Grid, TextField, Typography, Box, Button } from "@mui/material";
+import {
+  Grid,
+  TextField,
+  Typography,
+  Box,
+  Button,
+  InputLabel,
+  MenuItem,
+  Select,
+} from "@mui/material";
 //import axios from "axios";
 import { useState } from "react";
 import Modal from "@mui/material/Modal";
@@ -26,12 +35,13 @@ const style = {
 export default function EditAlarmModal(props) {
   const [checked, setChecked] = useState(props.alarm.active);
   const [date, setDate] = useState(new Date(props.alarm.dateOfBirth));
+  const [alarmType, setAlarmType] = useState("");
   //const bearerToken = useLoggedInStore((state) => state.bearerToken);
   const [data, setData] = useState({
     name: "",
     imageUrl: "",
     description: "",
-    alarmtype: "",
+    alarmtype: 0,
     activatingTime: "",
   });
 
@@ -41,6 +51,10 @@ export default function EditAlarmModal(props) {
       ...data,
       [e.target.name]: value,
     });
+  };
+
+  const handleSelectChange = (event) => {
+    setAlarmType(event.target.value);
   };
 
   const handleCheckboxChange = (event) => {
@@ -67,7 +81,7 @@ export default function EditAlarmModal(props) {
       alarmType:
         data.alarmType == null || data.alarmType.length < 1
           ? props.alarm.alarmType
-          : data.alarmType,
+          : alarmType,
       activatingTime:
         data.activatingTime == null || data.activatingTime.length < 1
           ? props.alarm.activatingTime
@@ -144,11 +158,11 @@ export default function EditAlarmModal(props) {
               <TextField
                 margin="normal"
                 required
-                name="alarmType"
-                defaultValue={props.alarm.alarmType}
-                label="Alarm type"
-                id="alarmType"
+                name="activatingTime"
+                label="Alarm"
                 onChange={handleChange}
+                id="activatingTime"
+                defaultValue={props.alarm.activatingTime}
                 style={{ width: "100%" }}
               />
             </Grid>
@@ -164,17 +178,19 @@ export default function EditAlarmModal(props) {
                 style={{ width: "95%", marginLeft: "10px" }}
               />
             </Grid>
-            <Grid item md="6">
-              <TextField
-                margin="normal"
-                required
-                name="activatingTime"
-                label="Alarm"
-                onChange={handleChange}
-                id="activatingTime"
-                defaultValue={props.alarm.activatingTime}
+            <Grid item md="12">
+              <InputLabel id="imageId">Alarm type</InputLabel>
+              <Select
+                id="imageId"
+                name="imageId"
+                defaultValue={props.alarm.alarmTypeId}
+                onChange={handleSelectChange}
                 style={{ width: "100%" }}
-              />
+              >
+                <MenuItem value={1}>Specifik dato og tid</MenuItem>
+                <MenuItem value={2}>Daglig</MenuItem>
+                <MenuItem value={3}>Ugentlig</MenuItem>
+              </Select>
             </Grid>
             <Grid item md="12">
               <Button

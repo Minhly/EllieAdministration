@@ -19,6 +19,7 @@ import Modal from "@mui/material/Modal";
 import * as React from "react";
 import EditIcon from "@mui/icons-material/Edit";
 //import { useLoggedInStore } from "../components/zustandStore";
+import EventNoteIcon from '@mui/icons-material/EventNote';
 
 function createData(
   id,
@@ -103,7 +104,7 @@ export default function UserAlarmsModal(props) {
   const handleClose = () => setOpen(false);
   return (
     <div>
-      <Button onClick={handleOpen} startIcon={<EditIcon />} />
+      <Button onClick={handleOpen} startIcon={<EventNoteIcon />} />
       <Modal
         open={open}
         onClose={handleClose}

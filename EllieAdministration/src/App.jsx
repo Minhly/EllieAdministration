@@ -11,6 +11,7 @@ import AlarmPage from "./pages/alarmPage.jsx";
 import ellie from '../src/assets/Elliez4.png'
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import LoginPage from "./pages/loginPage.jsx";
 
 function App() {
   return (
@@ -30,7 +31,7 @@ function App() {
               <Grid item md={10} marginTop={4}>
                 <CssBaseline />
                 <Routes>
-                  <Route path="/" element={<AlarmPage />} />
+                  <Route path="/" element={<LoginPage />} />
                   <Route path="/pages/employees" element={<EmployeePage />} />
                   <Route path="/pages/users" element={<EditUser />} />
                   <Route path="/pages/alarms" element={<AlarmPage />} />
