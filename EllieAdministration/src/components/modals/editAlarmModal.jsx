@@ -53,7 +53,7 @@ export default function EditAlarmModal(props) {
     name: "",
     imageUrl: "",
     description: "",
-    alarmtype: 0,
+    alarmTypeId: 0,
     activatingTime: "",
   });
   console.log(props);
@@ -77,10 +77,12 @@ export default function EditAlarmModal(props) {
 
   const handleCheckboxChange3 = (event) => {
     setDailyCheck(event.target.checked);
+    setAlarmType(2);
   };
 
   const handleCheckboxChange2 = (event) => {
     setWeeklyCheck(event.target.checked);
+    setAlarmType(3);
   };
 
   function handleSubmit(e) {
@@ -100,9 +102,9 @@ export default function EditAlarmModal(props) {
         data.description == null || data.description.length < 1
           ? props.alarm.description
           : data.description,
-      alarmType:
-        data.alarmType == null || data.alarmType.length < 1
-          ? props.alarm.alarmType
+      alarmTypeId:
+        data.alarmTypeId == null || data.alarmTypeId.length < 1
+          ? props.alarm.alarmTypeId
           : alarmType,
       activatingTime:
         data.activatingTime == null || data.activatingTime.length < 1

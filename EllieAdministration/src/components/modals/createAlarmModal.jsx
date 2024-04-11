@@ -336,7 +336,7 @@ export default function CreateAlarmModal() {
                   sx={{
                     width: "100%",
                     maxWidth: 360,
-                    border: 1,
+                    borderLeft: 1,
                     padding: 2,
                     bgcolor: "background.paper",
                     maxHeight: 200,
