@@ -56,7 +56,7 @@ export default function EditAlarmModal(props) {
     alarmTypeId: 0,
     activatingTime: "",
   });
-  console.log(props);
+
   const handleChange = (e) => {
     const value = e.target.value;
     setData({
@@ -68,10 +68,8 @@ export default function EditAlarmModal(props) {
   useEffect(() => {
     if (props.alarm.alarmTypeId == 2) {
       setDailyCheck(true);
-      console.log("render1");
     } else if (props.alarm.alarmTypeId == 3) {
       setWeeklyCheck(true);
-      console.log("render2");
     }
   }, []);
 
@@ -105,6 +103,8 @@ export default function EditAlarmModal(props) {
       alarmTypeId:
         data.alarmTypeId == null || data.alarmTypeId.length < 1
           ? props.alarm.alarmTypeId
+          : !dailyCheck && !weeklyCheck
+          ? 1
           : alarmType,
       activatingTime:
         data.activatingTime == null || data.activatingTime.length < 1
@@ -113,8 +113,6 @@ export default function EditAlarmModal(props) {
           ? dateValue
           : timeValue,
     };
-
-    console.log(alarmData);
 
     const config = {
       headers: {
