@@ -120,7 +120,7 @@ export default function EditAlarmModal(props) {
         //Authorization: `Bearer ${bearerToken}`,
       },
     };
-
+    console.log(alarmData);
     axios
       .put(
         "https://deep-wealthy-roughy.ngrok-free.app/alarm?id=" + props.alarm.id,

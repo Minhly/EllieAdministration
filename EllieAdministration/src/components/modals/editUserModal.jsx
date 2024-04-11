@@ -88,7 +88,7 @@ export default function EditUserModal(props) {
           //handleClose();
           window.location.reload(true);
         } else {
-          console.log("failed" + response.status);
+          console.log("failed" + response.body);
         }
       })
       .catch((error) => {

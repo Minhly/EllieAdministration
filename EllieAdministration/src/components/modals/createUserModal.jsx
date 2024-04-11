@@ -95,23 +95,13 @@ export default function CreateUserModal() {
       },
     };
 
-    const url = "https://deep-wealthy-roughy.ngrok-free.app/employee";
-    useEffect(() => {
-      axios
-        .get(url, config)
-        .then((res) => {
-          setEmployees(res.data);
-        })
-        .catch((err) => console.log(err));
-    }, []);
-
     axios
       .post("https://deep-wealthy-roughy.ngrok-free.app/user", userData, config)
       .then((response) => {
         if (response.status === 201) {
-          window.location.reload(true);
+          //window.location.reload(true);
         } else {
-          console.log("failed" + response.status);
+          console.log("failed" + response.body);
         }
       })
       .catch((error) => {
