@@ -8,10 +8,11 @@ import Sidebar2 from "./layout/sidebar.jsx";
 import EmployeePage from "./pages/employeePage.jsx";
 import AlarmPage from "./pages/alarmPage.jsx";
 //import ellie from "../src/assets/elliez4.png";
-import ellie from '../src/assets/Elliez4.png'
+import ellie from "../src/assets/Elliez4.png";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import LoginPage from "./pages/loginPage.jsx";
+import RegisterPage from "./pages/registerPage.jsx";
 
 function App() {
   return (
@@ -35,6 +36,7 @@ function App() {
                   <Route path="/pages/employees" element={<EmployeePage />} />
                   <Route path="/pages/users" element={<EditUser />} />
                   <Route path="/pages/alarms" element={<AlarmPage />} />
+                  <Route path="/pages/register" element={<RegisterPage />} />
                 </Routes>
               </Grid>
             </Grid>

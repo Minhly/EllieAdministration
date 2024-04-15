@@ -1,146 +1,140 @@
 import {
-    Button,
-    Grid,
-    Paper,
-    Table,
-    TableBody,
-    TableCell,
-    TableContainer,
-    TableHead,
-    TableRow,
-    TextField,
-    Typography,
-  } from "@mui/material";
-  import TopTitleComponent from "../layout/topTitleComponent";
-  import { useEffect, useState } from "react";
-  import EditUserModal from "../components/modals/editUserModal";
-  import CreateAlarmModal from "../components/modals/createAlarmModal";
-  import axios from "axios";
-  import EditAlarmModal from "../components/modals/editAlarmModal";
-  
-  function createData(id, name, activateAlarm, description, image) {
-    return {
-      id,
-      name,
-      activateAlarm,
-      description,
-      image,
+  Button,
+  Grid,
+  TextField,
+  Typography,
+  Box,
+  FormControlLabel,
+} from "@mui/material";
+import VpnKeyIcon from "@mui/icons-material/VpnKey";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { Link, Navigate, Route, redirect, useNavigate } from "react-router-dom";
+//import { useLoggedInStore } from '../components/zustandStore';
+import AlternateEmailIcon from "@mui/icons-material/AlternateEmail";
+import IconTextField from "../components/modals/iconTextField";
+
+function LoginPage() {
+  //const setIsLoggedIn = useLoggedInStore((state) => state.setIsLoggedIn)
+  //const setBearerToken = useLoggedInStore((state) => state.setBearerToken);
+  const [errorMessages, setErrorMessages] = useState({});
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const navigate = useNavigate();
+  const [data, setData] = useState({
+    email: "",
+    password: "",
+  });
+
+  const handleChange = (e) => {
+    const value = e.target.value;
+    setData({
+      ...data,
+      [e.target.name]: value,
+    });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    const userData = {
+      email: data.email,
+      password: data.password,
     };
-  }
-  
-  function LoginPage() {
-    const [alarms, setAlarms] = useState([]);
-  
-    //const bearerToken = useLoggedInStore((state) => state.bearerToken);
-  
+
+    /*
     const config = {
       headers: {
         "ngrok-skip-browser-warning": 1,
-        //Authorization: `Bearer ${bearerToken}`,
       },
     };
-  
-    const url = "https://deep-wealthy-roughy.ngrok-free.app/alarm";
-    useEffect(() => {
+
+    try {
       axios
-        .get(url, config)
-        .then((res) => {
-          setAlarms(res.data);
-        })
-        .catch((err) => console.log(err));
-    }, []);
-    console.log(alarms);
-    createData(alarms);
-    return (
-      <Grid
-        container
-        spacing={4}
-        justifyContent="flex-start"
-        direction="row"
-        alignItems="flex-start"
-      >
-        <Grid item md={12}>
-          <TopTitleComponent title="Alarmer" />
-        </Grid>
-        <Grid item md={2}></Grid>
-        <Grid item md={8}>
-          <div
-            sx={(theme) => ({
-              background: theme.palette.greenx.main,
-            })}
+        .post(
+          "https://deep-wealthy-roughy.ngrok-free.app/User/UserLogin",
+          userData,
+          config
+        )
+        .then((response) => {
+          if (response.status == 200) {
+            setIsLoggedIn(true);
+            setBearerToken(response.data.token);
+            navigate("/pages/admin");
+          } else if (response.status == 423) {
+            navigate("/pages/login");
+          } else if (response.status == 400) {
+            navigate("/pages/login");
+          } else {
+            navigate("/");
+          }
+        }).catch(error => { console.log(error.response)});
+    } catch (error) {
+      console.log(error);
+    }*/
+  };
+
+  return (
+    <Grid container marginTop={25} marginBottom={20}>
+      <Grid item md="4"></Grid>
+      <Grid item md="4" padding={10} style={{ backgroundColor: "#fff" }}>
+        <Box textAlign="center">
+          <Typography
+            marginBottom={2}
+            variant="h3"
             style={{
-              width: "100%",
-              height: "70px",
-              backgroundColor: "#85B585",
-              borderTopRightRadius: "5px",
-              borderTopLeftRadius: "5px",
+              color: "#5e90c1",
+              fontWeight: "bold",
+              marginTop: "-20px",
             }}
           >
-            <CreateAlarmModal />
-          </div>
-          <TableContainer component={Paper}>
-            <Table sx={{ minWidth: 650 }} aria-label="simple table">
-              <TableHead>
-                <TableRow>
-                  <TableCell
-                    align="left"
-                    sx={{ fontWeight: "bold", color: "#5e90c1" }}
-                  >
-                    Image
-                  </TableCell>
-                  <TableCell
-                    align="left"
-                    sx={{ fontWeight: "bold", color: "#5e90c1" }}
-                  >
-                    Id
-                  </TableCell>
-                  <TableCell
-                    align="left"
-                    sx={{ fontWeight: "bold", color: "#5e90c1" }}
-                  >
-                    Title
-                  </TableCell>
-                  <TableCell
-                    align="left"
-                    sx={{ fontWeight: "bold", color: "#5e90c1" }}
-                  >
-                    Beskrivelse
-                  </TableCell>
-                  <TableCell
-                    align="left"
-                    sx={{ fontWeight: "bold", color: "#5e90c1" }}
-                  >
-                    Alarm ringer
-                  </TableCell>
-                  <TableCell align="left"></TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {alarms.map((row) => (
-                  <TableRow
-                    key={row.id}
-                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                  >
-                    <TableCell component="th" scope="row">
-                      {row.imageUrl}
-                    </TableCell>
-                    <TableCell align="left">{row.id}</TableCell>
-                    <TableCell align="left">{row.name}</TableCell>
-                    <TableCell align="left">{row.description}</TableCell>
-                    <TableCell align="left">{row.activatingTime}</TableCell>
-                    <TableCell align="left">
-                      <EditAlarmModal alarm={row} />
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
-        </Grid>
-        <Grid item md={2}></Grid>
+            Login
+          </Typography>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+            }}
+          >
+            <Box component="form" onSubmit={handleSubmit} sx={{ mt: 1 }}>
+              <IconTextField
+                margin="normal"
+                required
+                fullWidth
+                id="email"
+                label="Email Address"
+                name="email"
+                onChange={handleChange}
+                autoFocus
+                iconStart={<AlternateEmailIcon />}
+              />
+              <IconTextField
+                margin="normal"
+                required
+                fullWidth
+                name="password"
+                label="Password"
+                type="password"
+                onChange={handleChange}
+                id="password"
+                iconStart={<VpnKeyIcon />}
+              />
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                startIcon={<VpnKeyIcon />}
+                sx={{ mt: 3, mb: 2 }}
+              >
+                Sign In
+              </Button>
+            </Box>
+          </Box>
+        </Box>
       </Grid>
-    );
-  }
-  
-  export default LoginPage;
-  
+      <Grid item md="4"></Grid>
+    </Grid>
+  );
+}
+
+export default LoginPage;
