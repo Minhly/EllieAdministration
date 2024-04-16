@@ -64,7 +64,7 @@ function AlarmPage() {
       <Grid item md={12}>
         <TopTitleComponent
           title="Alarmer"
-          icon={<AccessAlarmIcon />}
+          icon={<AccessAlarmIcon fontSize="large" />}
           color={"#85B585"}
         />
       </Grid>

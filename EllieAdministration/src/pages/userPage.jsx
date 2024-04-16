@@ -74,7 +74,7 @@ function EditUser() {
       <Grid item md={12}>
         <TopTitleComponent
           title="Brugere"
-          icon={<GroupIcon />}
+          icon={<GroupIcon fontSize="large" />}
           color={"#C3B1E1"}
         />
       </Grid>

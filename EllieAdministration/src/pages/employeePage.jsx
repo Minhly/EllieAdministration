@@ -73,7 +73,7 @@ function EmployeePage() {
       <Grid item md={12}>
         <TopTitleComponent
           title="Medarbejdere"
-          icon={<BadgeIcon />}
+          icon={<BadgeIcon fontSize="large" />}
           color={"#b2cbde"}
         />
       </Grid>

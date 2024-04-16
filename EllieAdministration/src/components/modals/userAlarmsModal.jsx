@@ -160,10 +160,8 @@ export default function UserAlarmsModal(props) {
                         {row.id}
                       </TableCell>
                       <TableCell align="left">{row.name}</TableCell>
-                      <TableCell align="left">{row.activateAlarm}</TableCell>
                       <TableCell align="left">{row.description}</TableCell>
-                      <TableCell align="left">{row.image}</TableCell>
-                      <TableCell align="left">{row.name}</TableCell>
+                      <TableCell align="left">{row.activatingTime}</TableCell>
                     </TableRow>
                   ))}
                 </TableBody>
