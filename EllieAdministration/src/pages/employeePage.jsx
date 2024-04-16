@@ -16,6 +16,8 @@ import { useEffect, useState } from "react";
 import CreateEmployeeModal from "../components/modals/createEmployeeModal";
 import EditEmployeeModal from "../components/modals/editEmployeeModal";
 import axios from "axios";
+import BadgeIcon from "@mui/icons-material/Badge";
+import { useLoggedInStore } from "../components/zustandStore";
 
 function createData(
   id,
@@ -40,12 +42,12 @@ function createData(
 function EmployeePage() {
   const [employees, setEmployees] = useState([]);
 
-  //const bearerToken = useLoggedInStore((state) => state.bearerToken);
+  const bearerToken = useLoggedInStore((state) => state.bearerToken);
 
   const config = {
     headers: {
       "ngrok-skip-browser-warning": 1,
-      //Authorization: `Bearer ${bearerToken}`,
+      Authorization: `Bearer ${bearerToken}`,
     },
   };
 
@@ -69,7 +71,11 @@ function EmployeePage() {
       alignItems="flex-start"
     >
       <Grid item md={12}>
-        <TopTitleComponent title="Medarbejdere" />
+        <TopTitleComponent
+          title="Medarbejdere"
+          icon={<BadgeIcon />}
+          color={"#b2cbde"}
+        />
       </Grid>
       <Grid item md={2}></Grid>
       <Grid item md={8}>
@@ -80,7 +86,7 @@ function EmployeePage() {
           style={{
             width: "100%",
             height: "70px",
-            backgroundColor: "#85B585",
+            backgroundColor: "#b2cbde",
             borderTopRightRadius: "5px",
             borderTopLeftRadius: "5px",
           }}
@@ -93,37 +99,37 @@ function EmployeePage() {
               <TableRow>
                 <TableCell
                   align="left"
-                  sx={{ fontWeight: "bold", color: "#85B585" }}
+                  sx={{ fontWeight: "bold", color: "#304674" }}
                 >
                   Id
                 </TableCell>
                 <TableCell
                   align="left"
-                  sx={{ fontWeight: "bold", color: "#85B585" }}
+                  sx={{ fontWeight: "bold", color: "#304674" }}
                 >
                   Fornavn
                 </TableCell>
                 <TableCell
                   align="left"
-                  sx={{ fontWeight: "bold", color: "#85B585" }}
+                  sx={{ fontWeight: "bold", color: "#304674" }}
                 >
                   Efternavn
                 </TableCell>
                 <TableCell
                   align="left"
-                  sx={{ fontWeight: "bold", color: "#85B585" }}
+                  sx={{ fontWeight: "bold", color: "#304674" }}
                 >
                   Email
                 </TableCell>
                 <TableCell
                   align="left"
-                  sx={{ fontWeight: "bold", color: "#85B585" }}
+                  sx={{ fontWeight: "bold", color: "#304674" }}
                 >
                   Rolle
                 </TableCell>
                 <TableCell
                   align="left"
-                  sx={{ fontWeight: "bold", color: "#85B585" }}
+                  sx={{ fontWeight: "bold", color: "#304674" }}
                 >
                   Institut
                 </TableCell>
@@ -142,8 +148,10 @@ function EmployeePage() {
                   <TableCell align="left">{row.firstName}</TableCell>
                   <TableCell align="left">{row.lastName}</TableCell>
                   <TableCell align="left">{row.email}</TableCell>
-                  <TableCell align="left">{row.roleId}</TableCell>
-                  <TableCell align="left">{row.instituteId}</TableCell>
+                  <TableCell align="left">
+                    {row.roleId == 1 ? "Administrator" : "Pædagog"}
+                  </TableCell>
+                  <TableCell align="left">{row.institute.name}</TableCell>
                   <TableCell align="left">
                     <EditEmployeeModal user={row} />
                   </TableCell>

@@ -14,10 +14,7 @@ import axios from "axios";
 import { useState } from "react";
 import Modal from "@mui/material/Modal";
 import * as React from "react";
-//import "react-datepicker/dist/react-datepicker.css";
-//import "../layout/register.css";
 import EditIcon from "@mui/icons-material/Edit";
-//import { useLoggedInStore } from "./zustandStore";
 import AddBoxIcon from "@mui/icons-material/AddBox";
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
 import List from "@mui/material/List";
@@ -27,7 +24,6 @@ import ListItemText from "@mui/material/ListItemText";
 import ListItemAvatar from "@mui/material/ListItemAvatar";
 import Checkbox from "@mui/material/Checkbox";
 import Avatar from "@mui/material/Avatar";
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { useEffect } from "react";
 import dayjs from "dayjs";
 import {
@@ -37,6 +33,7 @@ import {
   MobileTimePicker,
   TimePicker,
 } from "@mui/x-date-pickers";
+import { useLoggedInStore } from "../zustandStore";
 
 const style = {
   position: "absolute",
@@ -60,7 +57,7 @@ function createData(id, firstName, lastName, age) {
 }
 
 export default function CreateAlarmModal() {
-  //const bearerToken = useLoggedInStore((state) => state.bearerToken);
+  const bearerToken = useLoggedInStore((state) => state.bearerToken);
   const [dateValue, setDateValue] = useState(dayjs());
   const [timeValue, setTimeValue] = useState(dayjs());
   const [checked, setChecked] = useState([]);
@@ -122,15 +119,13 @@ export default function CreateAlarmModal() {
       description: data.description,
       imageUrl: "data.imageUrl",
       alarmTypeId: !dailyCheck && !weeklyCheck ? 1 : dailyCheck ? 2 : 3,
-      //usersToSetAlarmFor: checked,
-      //setAlarmForEveryUser: checked4,
     };
     console.log(alarmData);
 
     const config = {
       headers: {
         "ngrok-skip-browser-warning": 1,
-        //Authorization: `Bearer ${bearerToken}`,
+        Authorization: `Bearer ${bearerToken}`,
       },
     };
 
@@ -156,7 +151,7 @@ export default function CreateAlarmModal() {
   const config = {
     headers: {
       "ngrok-skip-browser-warning": 1,
-      //Authorization: `Bearer ${bearerToken}`,
+      Authorization: `Bearer ${bearerToken}`,
     },
   };
 

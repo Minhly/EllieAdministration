@@ -18,7 +18,7 @@ import { useEffect, useState } from "react";
 import Modal from "@mui/material/Modal";
 import * as React from "react";
 import EditIcon from "@mui/icons-material/Edit";
-//import { useLoggedInStore } from "../components/zustandStore";
+import { useLoggedInStore } from "../zustandStore";
 import EventNoteIcon from "@mui/icons-material/EventNote";
 
 function createData(
@@ -54,25 +54,28 @@ const style = {
   boxShadow: 24,
   p: 4,
 };
-
 export default function UserAlarmsModal(props) {
   const [userAlarms, SetUserAlarms] = useState([]);
   const [filteredList, setFilteredList] = useState([]);
-  //const bearerToken = useLoggedInStore((state) => state.bearerToken);
-  const [betHistories, setBettingHistory] = useState([]);
+  const bearerToken = useLoggedInStore((state) => state.bearerToken);
 
   const config = {
     headers: {
       "ngrok-skip-browser-warning": 1,
-      //Authorization: `Bearer ${bearerToken}`,
+      Authorization: `Bearer ${bearerToken}`,
     },
   };
 
-  const url = "https://deep-wealthy-roughy.ngrok-free.app/alarm";
+  const url =
+    "https://deep-wealthy-roughy.ngrok-free.app/UserAlarmRelation/GetAlarmsByUserId/id?id=" +
+    props.user.id;
+
+  console.log(url);
   useEffect(() => {
     axios
       .get(url, config)
       .then((res) => {
+        console.log(res.data);
         SetUserAlarms(res.data);
       })
       .catch((err) => console.log(err));
@@ -131,31 +134,19 @@ export default function UserAlarmsModal(props) {
                       align="left"
                       sx={{ fontWeight: "bold", color: "#85B585" }}
                     >
-                      Brugernavn
+                      Titel
                     </TableCell>
                     <TableCell
                       align="left"
                       sx={{ fontWeight: "bold", color: "#85B585" }}
                     >
-                      Fornavn
+                      Beskrivelse
                     </TableCell>
                     <TableCell
                       align="left"
                       sx={{ fontWeight: "bold", color: "#85B585" }}
                     >
-                      Efternavn
-                    </TableCell>
-                    <TableCell
-                      align="left"
-                      sx={{ fontWeight: "bold", color: "#85B585" }}
-                    >
-                      Email
-                    </TableCell>
-                    <TableCell
-                      align="left"
-                      sx={{ fontWeight: "bold", color: "#85B585" }}
-                    >
-                      Aktiv
+                      Alarm ringer
                     </TableCell>
                   </TableRow>
                 </TableHead>

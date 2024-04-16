@@ -4,11 +4,8 @@ import { useState } from "react";
 import Modal from "@mui/material/Modal";
 import * as React from "react";
 import Checkbox from "@mui/material/Checkbox";
-//import DatePicker from "react-datepicker";
-//import "react-datepicker/dist/react-datepicker.css";
-//import "../layout/register.css";
 import EditIcon from "@mui/icons-material/Edit";
-//import { useLoggedInStore } from "../components/zustandStore";
+import { useLoggedInStore } from "../zustandStore";
 
 const style = {
   position: "absolute",
@@ -27,14 +24,14 @@ export default function EditEmployeeModal(props) {
   const handleCalendarClose = () => console.log("Calendar closed");
   const handleCalendarOpen = () => console.log("Calendar opened");
   const [date, setDate] = useState(new Date(props.user.dateOfBirth));
-  //const bearerToken = useLoggedInStore((state) => state.bearerToken);
+  const bearerToken = useLoggedInStore((state) => state.bearerToken);
   const [data, setData] = useState({
     firstName: "",
     lastName: "",
     email: "",
     password: "",
-    role: "",
-    instituteId: 1,
+    roleId: "",
+    instituteId: "",
   });
 
   const handleChange = (e) => {
@@ -66,20 +63,20 @@ export default function EditEmployeeModal(props) {
         data.email == null || data.email.length < 1
           ? props.user.email
           : data.email,
-      role:
-        data.role == null || data.role.length < 1 ? props.user.role : data.role,
+      roleId:
+        data.roleId == null || data.roleId.length < 1
+          ? props.user.roleId
+          : data.roleId,
       instituteId:
         data.instituteId == null || data.instituteId.length < 1
           ? props.user.instituteId
           : data.instituteId,
-      passwordHash: props.user.passwordHash,
-      passwordSalt: props.user.passwordSalt,
     };
 
     const config = {
       headers: {
         "ngrok-skip-browser-warning": 1,
-        //Authorization: `Bearer ${bearerToken}`,
+        Authorization: `Bearer ${bearerToken}`,
       },
     };
 
@@ -94,12 +91,14 @@ export default function EditEmployeeModal(props) {
         if (response.status === 200) {
           window.location.reload(true);
         } else {
-          console.log("failed" + response.status);
+          console.log("failed" + response.body);
         }
       })
       .catch((error) => {
         console.log(error.response);
       });
+
+    console.log(employeeData);
   }
 
   const [open, setOpen] = useState(false);
@@ -145,10 +144,11 @@ export default function EditEmployeeModal(props) {
               <TextField
                 margin="normal"
                 required
-                name="role"
-                defaultValue={props.user.role}
+                name="roleId"
+                type="number"
+                defaultValue={props.user.roleId}
                 label="Rolle"
-                id="role"
+                id="roleId"
                 onChange={handleChange}
                 style={{ width: "100%" }}
               />
@@ -168,6 +168,7 @@ export default function EditEmployeeModal(props) {
             <Grid item md="6">
               <TextField
                 margin="normal"
+                type="number"
                 required
                 name="instituteId"
                 label="Institut"
@@ -177,7 +178,7 @@ export default function EditEmployeeModal(props) {
                 style={{ width: "100%" }}
               />
             </Grid>
-            <Grid item md="6">
+            {/*<Grid item md="6">
               <TextField
                 margin="normal"
                 required
@@ -188,7 +189,7 @@ export default function EditEmployeeModal(props) {
                 onChange={handleChange}
                 style={{ width: "95%", marginLeft: "10px" }}
               />
-            </Grid>
+  </Grid>*/}
             <Grid item md="12">
               <Button
                 type="submit"

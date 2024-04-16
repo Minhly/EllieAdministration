@@ -12,10 +12,8 @@ import axios from "axios";
 import { useState } from "react";
 import Modal from "@mui/material/Modal";
 import * as React from "react";
-//import "react-datepicker/dist/react-datepicker.css";
-//import "../layout/register.css";
 import EditIcon from "@mui/icons-material/Edit";
-//import { useLoggedInStore } from "./zustandStore";
+import { useLoggedInStore } from "../zustandStore";
 import AddBoxIcon from "@mui/icons-material/AddBox";
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
 
@@ -33,7 +31,7 @@ const style = {
 
 export default function CreateEmployeeModal() {
   const [roleA, setRole] = useState("");
-  //const bearerToken = useLoggedInStore((state) => state.bearerToken);
+  const bearerToken = useLoggedInStore((state) => state.bearerToken);
   const [data, setData] = useState({
     firstName: "",
     lastName: "",
@@ -63,8 +61,9 @@ export default function CreateEmployeeModal() {
       lastName: data.lastName,
       email: data.email,
       password: data.password,
-      role: roleA,
+      roleId: roleA,
       instituteId: data.instituteId,
+      active: true,
     };
 
     console.log(employeeData);
@@ -72,7 +71,7 @@ export default function CreateEmployeeModal() {
     const config = {
       headers: {
         "ngrok-skip-browser-warning": 1,
-        //Authorization: `Bearer ${bearerToken}`,
+        Authorization: `Bearer ${bearerToken}`,
       },
     };
 
@@ -86,7 +85,7 @@ export default function CreateEmployeeModal() {
         if (response.status === 201) {
           window.location.reload(true);
         } else {
-          console.log("failed" + response.status);
+          console.log("failed" + response.body);
         }
       })
       .catch((error) => {
@@ -102,10 +101,10 @@ export default function CreateEmployeeModal() {
       <Button
         style={{
           marginTop: "10px",
-          color: "green",
+          color: "#304674",
           fontWeight: "bold",
           border: "solid 2px",
-          backgroundColor: "#C1E1C1",
+          backgroundColor: "#d8e1e8",
         }}
         size="large"
         onClick={handleOpen}
@@ -159,6 +158,7 @@ export default function CreateEmployeeModal() {
               <TextField
                 margin="normal"
                 required
+                type="password"
                 name="password"
                 label="Kodeord"
                 onChange={handleChange}

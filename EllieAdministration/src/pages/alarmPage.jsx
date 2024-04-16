@@ -18,6 +18,7 @@ import CreateAlarmModal from "../components/modals/createAlarmModal";
 import axios from "axios";
 import EditAlarmModal from "../components/modals/editAlarmModal";
 import AccessAlarmIcon from "@mui/icons-material/AccessAlarm";
+import { useLoggedInStore } from "../components/zustandStore";
 
 function createData(id, name, activateAlarm, description, image) {
   return {
@@ -31,13 +32,12 @@ function createData(id, name, activateAlarm, description, image) {
 
 function AlarmPage() {
   const [alarms, setAlarms] = useState([]);
-
-  //const bearerToken = useLoggedInStore((state) => state.bearerToken);
+  const bearerToken = useLoggedInStore((state) => state.bearerToken);
 
   const config = {
     headers: {
       "ngrok-skip-browser-warning": 1,
-      //Authorization: `Bearer ${bearerToken}`,
+      Authorization: `Bearer ${bearerToken}`,
     },
   };
 
@@ -62,7 +62,11 @@ function AlarmPage() {
       alignItems="flex-start"
     >
       <Grid item md={12}>
-        <TopTitleComponent title="Alarmer" icon={<AccessAlarmIcon />} />
+        <TopTitleComponent
+          title="Alarmer"
+          icon={<AccessAlarmIcon />}
+          color={"#85B585"}
+        />
       </Grid>
       <Grid item md={2}></Grid>
       <Grid item md={8}>

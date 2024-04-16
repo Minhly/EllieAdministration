@@ -1,13 +1,30 @@
-import { Container, Grid, Typography } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Button, Container, Grid, Typography } from "@mui/material";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import { Sidebar, Menu, MenuItem } from "react-pro-sidebar";
 import CalendarTodayIcon from "@mui/icons-material/CalendarTodayOutlined";
 import ellielogo from "../assets/Ellie2.png";
 import GroupIcon from "@mui/icons-material/Group";
 import BadgeIcon from "@mui/icons-material/Badge";
 import AccessAlarmIcon from "@mui/icons-material/AccessAlarm";
+import { useLoggedInStore } from "../components/zustandStore";
 
 function Sidebar2() {
+  const setIsLoggedIn = useLoggedInStore((state) => state.setIsLoggedIn);
+  const setBearerToken = useLoggedInStore((state) => state.setBearerToken);
+  const setUserRole = useLoggedInStore((state) => state.setUserRole);
+  const setUserEmail = useLoggedInStore((state) => state.setUserEmail);
+  const userRole = useLoggedInStore((state) => state.userRole);
+  const email = useLoggedInStore((state) => state.email);
+  const navigate = useNavigate();
+
+  const logOut = () => {
+    navigate("/");
+    setIsLoggedIn(false);
+    setBearerToken("");
+    setUserRole("");
+    setUserEmail("");
+  };
+
   return (
     <>
       <div id="app" style={{ height: "100vh" }}>
@@ -27,7 +44,10 @@ function Sidebar2() {
               paddingTop={2}
               paddingBottom={2}
             >
-              <Link to="/" style={{ textDecoration: "none", color: "#fff" }}>
+              <Link
+                to="/pages/alarms"
+                style={{ textDecoration: "none", color: "#fff" }}
+              >
                 <img
                   src={ellielogo}
                   alt="ellielogo"
@@ -41,19 +61,23 @@ function Sidebar2() {
             >
               Alarmer
             </MenuItem>
-            <MenuItem
-              backgroundColor={"black"}
-              component={<Link to="/pages/users" />}
-              icon={<GroupIcon style={{ color: "#fff" }} />}
-            >
-              Brugere
-            </MenuItem>
-            <MenuItem
-              component={<Link to="/pages/employees" />}
-              icon={<BadgeIcon style={{ color: "#fff" }} />}
-            >
-              Medarbejdere
-            </MenuItem>
+            {userRole == "Administrator" ? (
+              <MenuItem
+                backgroundColor={"black"}
+                component={<Link to="/pages/users" />}
+                icon={<GroupIcon style={{ color: "#fff" }} />}
+              >
+                Brugere
+              </MenuItem>
+            ) : null}
+            {userRole == "Administrator" ? (
+              <MenuItem
+                component={<Link to="/pages/employees" />}
+                icon={<BadgeIcon style={{ color: "#fff" }} />}
+              >
+                Medarbejdere
+              </MenuItem>
+            ) : null}
             <MenuItem
               component={<Link to="/pages/tutorial" />}
               icon={<CalendarTodayIcon style={{ color: "#fff" }} />}
@@ -61,6 +85,36 @@ function Sidebar2() {
               Vejledning
             </MenuItem>
           </Menu>
+          <Grid md={12}>
+            <Typography
+              style={{
+                position: "absolute",
+                bottom: 50,
+                textAlign: "center",
+                right: 0,
+                left: 0,
+                textDecoration: "none",
+                fontWeight: "bold",
+                color: "#85B585",
+              }}
+            >
+              Velkommen {email}
+            </Typography>
+          </Grid>
+          <Button
+            style={{
+              position: "absolute",
+              bottom: 0,
+              right: 0,
+              left: 0,
+              textDecoration: "none",
+              fontWeight: "bold",
+              color: "#85B585",
+            }}
+            onClick={logOut}
+          >
+            Log ud
+          </Button>
         </Sidebar>
       </div>
     </>

@@ -12,11 +12,12 @@ function TopTitleComponent(props) {
       <Grid item md={1}></Grid>
       <Grid item md={10} borderBottom={2} borderColor="#85b585">
         <Typography
-          color="#85b585"
+          color={props.color}
           variant="h2"
           justifyContent="flex-start"
           alignItems="flex-start"
         >
+          {props.icon}
           {props.title}
         </Typography>
       </Grid>

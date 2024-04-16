@@ -12,10 +12,8 @@ import axios from "axios";
 import { useState } from "react";
 import Modal from "@mui/material/Modal";
 import * as React from "react";
-//import "react-datepicker/dist/react-datepicker.css";
-//import "../layout/register.css";
 import EditIcon from "@mui/icons-material/Edit";
-//import { useLoggedInStore } from "./zustandStore";
+import { useLoggedInStore } from "../zustandStore";
 import AddBoxIcon from "@mui/icons-material/AddBox";
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
 import { useEffect } from "react";
@@ -35,7 +33,7 @@ const style = {
 export default function CreateUserModal() {
   const [employeeContact, setEmployeeContact] = useState("");
   const [employees, setEmployees] = useState([]);
-  //const bearerToken = useLoggedInStore((state) => state.bearerToken);
+  const bearerToken = useLoggedInStore((state) => state.bearerToken);
   const [data, setData] = useState({
     firstName: "",
     lastName: "",
@@ -48,7 +46,7 @@ export default function CreateUserModal() {
   const config = {
     headers: {
       "ngrok-skip-browser-warning": 1,
-      // Authorization: `Bearer ${bearerToken}`,
+      Authorization: `Bearer ${bearerToken}`,
     },
   };
 
@@ -117,10 +115,10 @@ export default function CreateUserModal() {
       <Button
         style={{
           marginTop: "10px",
-          color: "green",
+          color: "#6c546f",
           fontWeight: "bold",
           border: "solid 2px",
-          backgroundColor: "#C1E1C1",
+          backgroundColor: "#ece6ff",
         }}
         size="large"
         onClick={handleOpen}

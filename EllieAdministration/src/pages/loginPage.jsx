@@ -10,13 +10,15 @@ import VpnKeyIcon from "@mui/icons-material/VpnKey";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { Link, Navigate, Route, redirect, useNavigate } from "react-router-dom";
-//import { useLoggedInStore } from '../components/zustandStore';
+import { useLoggedInStore } from "../components/zustandStore";
 import AlternateEmailIcon from "@mui/icons-material/AlternateEmail";
 import IconTextField from "../components/modals/iconTextField";
 
 function LoginPage() {
-  //const setIsLoggedIn = useLoggedInStore((state) => state.setIsLoggedIn)
-  //const setBearerToken = useLoggedInStore((state) => state.setBearerToken);
+  const setIsLoggedIn = useLoggedInStore((state) => state.setIsLoggedIn);
+  const setBearerToken = useLoggedInStore((state) => state.setBearerToken);
+  const setUserRole = useLoggedInStore((state) => state.setUserRole);
+  const setUserEmail = useLoggedInStore((state) => state.setUserEmail);
   const [errorMessages, setErrorMessages] = useState({});
   const [isSubmitted, setIsSubmitted] = useState(false);
   const navigate = useNavigate();
@@ -41,7 +43,6 @@ function LoginPage() {
       password: data.password,
     };
 
-    /*
     const config = {
       headers: {
         "ngrok-skip-browser-warning": 1,
@@ -51,38 +52,52 @@ function LoginPage() {
     try {
       axios
         .post(
-          "https://deep-wealthy-roughy.ngrok-free.app/User/UserLogin",
+          "https://deep-wealthy-roughy.ngrok-free.app/Employee/UserLogin",
           userData,
           config
         )
         .then((response) => {
+          console.log(response.status);
           if (response.status == 200) {
+            navigate("/pages/alarms");
             setIsLoggedIn(true);
             setBearerToken(response.data.token);
-            navigate("/pages/admin");
+            setUserRole(response.data.login.userType1);
+            setUserEmail(response.data.login.email);
           } else if (response.status == 423) {
-            navigate("/pages/login");
+            navigate("/pages/alarms");
+            setIsLoggedIn(true);
+            setBearerToken(response.data.token);
+            setUserRole(response.data.login.userType1);
+            setUserEmail(response.data.login.email);
           } else if (response.status == 400) {
-            navigate("/pages/login");
+            navigate("/pages/alarms");
+            setIsLoggedIn(true);
+            setBearerToken(response.data.token);
+            setUserRole(response.data.login.userType1);
+            setUserEmail(response.data.login.email);
           } else {
             navigate("/");
           }
-        }).catch(error => { console.log(error.response)});
+        })
+        .catch((error) => {
+          console.log(error.response);
+        });
     } catch (error) {
       console.log(error);
-    }*/
+    }
   };
 
   return (
     <Grid container marginTop={25} marginBottom={20}>
       <Grid item md="4"></Grid>
-      <Grid item md="4" padding={10} style={{ backgroundColor: "#fff" }}>
+      <Grid item md="6" padding={10} style={{ backgroundColor: "#fff" }}>
         <Box textAlign="center">
           <Typography
             marginBottom={2}
             variant="h3"
             style={{
-              color: "#5e90c1",
+              color: "#85B585",
               fontWeight: "bold",
               marginTop: "-20px",
             }}
@@ -124,15 +139,15 @@ function LoginPage() {
                 fullWidth
                 variant="contained"
                 startIcon={<VpnKeyIcon />}
-                sx={{ mt: 3, mb: 2 }}
+                sx={{ mt: 3, mb: 2, backgroundColor: "#85B585" }}
               >
-                Sign In
+                Log ind
               </Button>
             </Box>
           </Box>
         </Box>
       </Grid>
-      <Grid item md="4"></Grid>
+      <Grid item md="1"></Grid>
     </Grid>
   );
 }

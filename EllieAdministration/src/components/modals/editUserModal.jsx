@@ -5,7 +5,7 @@ import Modal from "@mui/material/Modal";
 import * as React from "react";
 import Checkbox from "@mui/material/Checkbox";
 import EditIcon from "@mui/icons-material/Edit";
-//import { useLoggedInStore } from "../components/zustandStore";
+import { useLoggedInStore } from "../zustandStore";
 
 const style = {
   position: "absolute",
@@ -21,12 +21,12 @@ const style = {
 
 export default function EditUserModal(props) {
   const [checked, setChecked] = useState(props.user.active);
-  //const bearerToken = useLoggedInStore((state) => state.bearerToken);
+  const bearerToken = useLoggedInStore((state) => state.bearerToken);
   const [data, setData] = useState({
     firstName: "",
     lastName: "",
     room: "",
-    active: false,
+    active: "",
     points: "",
     contactPersonId: "",
   });
@@ -72,7 +72,7 @@ export default function EditUserModal(props) {
     const config = {
       headers: {
         "ngrok-skip-browser-warning": 1,
-        //Authorization: `Bearer ${bearerToken}`,
+        Authorization: `Bearer ${bearerToken}`,
       },
     };
 

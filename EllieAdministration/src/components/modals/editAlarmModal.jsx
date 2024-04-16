@@ -9,16 +9,12 @@ import {
   Select,
   InputAdornment,
 } from "@mui/material";
-//import axios from "axios";
 import { useState } from "react";
 import Modal from "@mui/material/Modal";
 import * as React from "react";
 import Checkbox from "@mui/material/Checkbox";
-//import DatePicker from "react-datepicker";
-//import "react-datepicker/dist/react-datepicker.css";
-//import "../layout/register.css";
 import EditIcon from "@mui/icons-material/Edit";
-//import { useLoggedInStore } from "../components/zustandStore";
+import { useLoggedInStore } from "../zustandStore";
 import axios from "axios";
 import dayjs from "dayjs";
 import {
@@ -48,12 +44,12 @@ export default function EditAlarmModal(props) {
   const [timeValue, setTimeValue] = useState(dayjs());
   const [dailyCheck, setDailyCheck] = useState(false);
   const [weeklyCheck, setWeeklyCheck] = useState(false);
-  //const bearerToken = useLoggedInStore((state) => state.bearerToken);
+  const bearerToken = useLoggedInStore((state) => state.bearerToken);
   const [data, setData] = useState({
     name: "",
     imageUrl: "",
     description: "",
-    alarmTypeId: 0,
+    alarmTypeId: "",
     activatingTime: "",
   });
 
@@ -117,7 +113,7 @@ export default function EditAlarmModal(props) {
     const config = {
       headers: {
         "ngrok-skip-browser-warning": 1,
-        //Authorization: `Bearer ${bearerToken}`,
+        Authorization: `Bearer ${bearerToken}`,
       },
     };
     console.log(alarmData);

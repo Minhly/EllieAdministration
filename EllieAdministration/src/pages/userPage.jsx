@@ -17,6 +17,8 @@ import EditUserModal from "../components/modals/editUserModal";
 import CreateUserModal from "../components/modals/createUserModal";
 import axios from "axios";
 import UserAlarmsModal from "../components/modals/userAlarmsModal";
+import { useLoggedInStore } from "../components/zustandStore";
+import GroupIcon from "@mui/icons-material/Group";
 
 function createData(
   id,
@@ -41,12 +43,12 @@ function createData(
 function EditUser() {
   const [users, setUsers] = useState([]);
 
-  //const bearerToken = useLoggedInStore((state) => state.bearerToken);
+  const bearerToken = useLoggedInStore((state) => state.bearerToken);
 
   const config = {
     headers: {
       "ngrok-skip-browser-warning": 1,
-      //Authorization: `Bearer ${bearerToken}`,
+      Authorization: `Bearer ${bearerToken}`,
     },
   };
 
@@ -70,7 +72,11 @@ function EditUser() {
       alignItems="flex-start"
     >
       <Grid item md={12}>
-        <TopTitleComponent title="Brugere" />
+        <TopTitleComponent
+          title="Brugere"
+          icon={<GroupIcon />}
+          color={"#C3B1E1"}
+        />
       </Grid>
       <Grid item md={2}></Grid>
       <Grid item md={8}>
@@ -81,7 +87,7 @@ function EditUser() {
           style={{
             width: "100%",
             height: "70px",
-            backgroundColor: "#85B585",
+            backgroundColor: "#C3B1E1",
             borderTopRightRadius: "5px",
             borderTopLeftRadius: "5px",
           }}
@@ -94,43 +100,43 @@ function EditUser() {
               <TableRow>
                 <TableCell
                   align="left"
-                  sx={{ fontWeight: "bold", color: "#85B585" }}
+                  sx={{ fontWeight: "bold", color: "#6c546f" }}
                 >
                   Id
                 </TableCell>
                 <TableCell
                   align="left"
-                  sx={{ fontWeight: "bold", color: "#85B585" }}
+                  sx={{ fontWeight: "bold", color: "#6c546f" }}
                 >
                   Fornavn
                 </TableCell>
                 <TableCell
                   align="left"
-                  sx={{ fontWeight: "bold", color: "#85B585" }}
+                  sx={{ fontWeight: "bold", color: "#6c546f" }}
                 >
                   Efternavn
                 </TableCell>
                 <TableCell
                   align="left"
-                  sx={{ fontWeight: "bold", color: "#85B585" }}
+                  sx={{ fontWeight: "bold", color: "#6c546f" }}
                 >
                   Værelse
                 </TableCell>
                 <TableCell
                   align="left"
-                  sx={{ fontWeight: "bold", color: "#85B585" }}
+                  sx={{ fontWeight: "bold", color: "#6c546f" }}
                 >
                   Point
                 </TableCell>
                 <TableCell
                   align="left"
-                  sx={{ fontWeight: "bold", color: "#85B585" }}
+                  sx={{ fontWeight: "bold", color: "#6c546f" }}
                 >
                   Kontaktperson
                 </TableCell>
                 <TableCell
                   align="left"
-                  sx={{ fontWeight: "bold", color: "#85B585" }}
+                  sx={{ fontWeight: "bold", color: "#6c546f" }}
                 >
                   Aktiv
                 </TableCell>
