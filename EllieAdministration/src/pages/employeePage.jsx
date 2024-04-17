@@ -93,10 +93,10 @@ function EmployeePage() {
         >
           <CreateEmployeeModal />
         </div>
-        <TableContainer component={Paper}>
+        <TableContainer style={{ maxHeight: 600 }} component={Paper}>
           <Table sx={{ minWidth: 650 }} aria-label="simple table">
             <TableHead>
-              <TableRow>
+              <TableRow style={{ backgroundColor: "#f5f5f5", height: "35px" }}>
                 <TableCell
                   align="left"
                   sx={{ fontWeight: "bold", color: "#304674" }}

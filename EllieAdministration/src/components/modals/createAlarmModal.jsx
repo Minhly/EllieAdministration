@@ -103,6 +103,23 @@ export default function CreateAlarmModal() {
     setChecked(newChecked);
   };
 
+  const config = {
+    headers: {
+      "ngrok-skip-browser-warning": 1,
+      Authorization: `Bearer ${bearerToken}`,
+    },
+  };
+
+  const url = "https://deep-wealthy-roughy.ngrok-free.app/user";
+  useEffect(() => {
+    axios
+      .get(url, config)
+      .then((res) => {
+        setUsers(res.data);
+      })
+      .catch((err) => console.log(err));
+  }, []);
+
   const handleChange = (e) => {
     const value = e.target.value;
     setData({
@@ -119,6 +136,7 @@ export default function CreateAlarmModal() {
       description: data.description,
       imageUrl: "data.imageUrl",
       alarmTypeId: !dailyCheck && !weeklyCheck ? 1 : dailyCheck ? 2 : 3,
+      active: true,
     };
     console.log(alarmData);
 
@@ -137,7 +155,6 @@ export default function CreateAlarmModal() {
       )
       .then((response) => {
         if (response.status === 201) {
-          setUsers(response.data);
           window.location.reload(true);
         } else {
           console.log("failed" + response.body);
@@ -147,23 +164,6 @@ export default function CreateAlarmModal() {
         console.log(error.response);
       });
   }
-
-  const config = {
-    headers: {
-      "ngrok-skip-browser-warning": 1,
-      Authorization: `Bearer ${bearerToken}`,
-    },
-  };
-
-  const url = "https://deep-wealthy-roughy.ngrok-free.app/user";
-  useEffect(() => {
-    axios
-      .get(url, config)
-      .then((res) => {
-        setUsers(res.data);
-      })
-      .catch((err) => console.log(err));
-  }, []);
 
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);

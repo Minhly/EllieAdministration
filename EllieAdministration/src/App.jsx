@@ -7,7 +7,7 @@ import EditUser from "./pages/userPage.jsx";
 import Sidebar2 from "./layout/sidebar.jsx";
 import EmployeePage from "./pages/employeePage.jsx";
 import AlarmPage from "./pages/alarmPage.jsx";
-import ellie from "../src/assets/Elliebg3.png";
+import ellie from "../src/assets/Elliez4.png";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import LoginPage from "./pages/loginPage.jsx";

@@ -19,6 +19,7 @@ import axios from "axios";
 import UserAlarmsModal from "../components/modals/userAlarmsModal";
 import { useLoggedInStore } from "../components/zustandStore";
 import GroupIcon from "@mui/icons-material/Group";
+import UserNotesModal from "../components/modals/userNotesModal";
 
 function createData(
   id,
@@ -94,10 +95,10 @@ function EditUser() {
         >
           <CreateUserModal />
         </div>
-        <TableContainer component={Paper}>
+        <TableContainer style={{ maxHeight: 600 }} component={Paper}>
           <Table sx={{ minWidth: 650 }} aria-label="simple table">
             <TableHead>
-              <TableRow>
+              <TableRow style={{ backgroundColor: "#f5f5f5", height: "35px" }}>
                 <TableCell
                   align="left"
                   sx={{ fontWeight: "bold", color: "#6c546f" }}
@@ -140,8 +141,24 @@ function EditUser() {
                 >
                   Aktiv
                 </TableCell>
-                <TableCell align="left"></TableCell>
-                <TableCell align="left"></TableCell>
+                <TableCell
+                  align="left"
+                  sx={{ fontWeight: "bold", color: "#6c546f" }}
+                >
+                  Alarmer
+                </TableCell>
+                <TableCell
+                  align="left"
+                  sx={{ fontWeight: "bold", color: "#6c546f" }}
+                >
+                  Noter
+                </TableCell>
+                <TableCell
+                  align="left"
+                  sx={{ fontWeight: "bold", color: "#6c546f" }}
+                >
+                  Rediger
+                </TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -161,6 +178,9 @@ function EditUser() {
                   <TableCell align="left">{row.active.toString()}</TableCell>
                   <TableCell align="left">
                     <UserAlarmsModal user={row} />
+                  </TableCell>
+                  <TableCell align="left">
+                    <UserNotesModal user={row} />
                   </TableCell>
                   <TableCell align="left">
                     <EditUserModal user={row} setUsers={setUsers} />

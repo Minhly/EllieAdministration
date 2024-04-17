@@ -118,7 +118,9 @@ export default function UserAlarmsModal(props) {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style} component="form" noValidate>
-          <Typography variant="h5">BrugerId: {props.user.id}</Typography>
+          <Typography variant="h5">
+            {props.user.firstName} {props.user.lastName}
+          </Typography>
           <Grid container md="12">
             <TableContainer component={Paper}>
               <Table sx={{ minWidth: 650 }} aria-label="simple table">

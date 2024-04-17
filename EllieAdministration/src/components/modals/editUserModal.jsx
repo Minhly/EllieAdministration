@@ -108,7 +108,9 @@ export default function EditUserModal(props) {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style} component="form" onSubmit={handleSubmit} noValidate>
-          <Typography variant="h5">BrugerId: {props.user.id}</Typography>
+          <Typography variant="h5">
+            {props.user.firstName} {props.user.lastName}
+          </Typography>
           <Grid container md="12">
             <Grid item md="6">
               <TextField

@@ -61,15 +61,13 @@ function Sidebar2() {
             >
               Alarmer
             </MenuItem>
-            {userRole == "Administrator" ? (
-              <MenuItem
-                backgroundColor={"black"}
-                component={<Link to="/pages/users" />}
-                icon={<GroupIcon style={{ color: "#fff" }} />}
-              >
-                Brugere
-              </MenuItem>
-            ) : null}
+            <MenuItem
+              backgroundColor={"black"}
+              component={<Link to="/pages/users" />}
+              icon={<GroupIcon style={{ color: "#fff" }} />}
+            >
+              Brugere
+            </MenuItem>
             {userRole == "Administrator" ? (
               <MenuItem
                 component={<Link to="/pages/employees" />}
