@@ -34,6 +34,12 @@ import {
   TimePicker,
 } from "@mui/x-date-pickers";
 import { useLoggedInStore } from "../zustandStore";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import utc from "dayjs/plugin/utc";
+import timezone from "dayjs/plugin/timezone";
+
+dayjs.extend(utc);
+dayjs.extend(timezone);
 
 const style = {
   position: "absolute",
@@ -229,11 +235,13 @@ export default function CreateAlarmModal() {
                 <MenuItem value={4}>Dinner</MenuItem>
                 <MenuItem value={5}>Therapy</MenuItem>
                 <MenuItem value={6}>Training</MenuItem>
+                <MenuItem value={7}>Study</MenuItem>
               </Select>
             </Grid>
             {!dailyCheck && !weeklyCheck ? (
               <Grid item md={8} marginTop={2}>
                 <MobileDateTimePicker
+                  timezone={"UTC"}
                   label="Dag og tidspunkt for alarm"
                   disablePast={true}
                   ampm={false}
