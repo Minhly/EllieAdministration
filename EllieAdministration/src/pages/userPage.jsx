@@ -62,7 +62,7 @@ function EditUser() {
       })
       .catch((err) => console.log(err));
   }, []);
-  console.log(users);
+
   createData(users);
   return (
     <Grid

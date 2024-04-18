@@ -21,8 +21,6 @@ import IconTextField from "../components/modals/iconTextField";
 
 function RegisterPage() {
   const [date, setDate] = useState(new Date("01/01/1999"));
-  const handleCalendarClose = () => console.log("Calendar closed");
-  const handleCalendarOpen = () => console.log("Calendar opened");
   const navigate = useNavigate();
   const [data, setData] = useState({
     firstname: "",

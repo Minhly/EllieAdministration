@@ -61,8 +61,6 @@ export default function CreateUserModal() {
       .catch((err) => console.log(err));
   }, []);
 
-  console.log(employees);
-
   const handleChange = (e) => {
     const value = e.target.value;
     setData({

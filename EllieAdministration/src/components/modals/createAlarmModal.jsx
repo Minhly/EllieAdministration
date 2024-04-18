@@ -144,7 +144,6 @@ export default function CreateAlarmModal() {
       alarmTypeId: !dailyCheck && !weeklyCheck ? 1 : dailyCheck ? 2 : 3,
       active: true,
     };
-    console.log(alarmData);
 
     const config = {
       headers: {

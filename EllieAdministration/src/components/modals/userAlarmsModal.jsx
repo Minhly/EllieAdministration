@@ -70,7 +70,6 @@ export default function UserAlarmsModal(props) {
     "https://deep-wealthy-roughy.ngrok-free.app/UserAlarmRelation/GetAlarmsByUserId/id?id=" +
     props.user.id;
 
-  console.log(url);
   useEffect(() => {
     axios
       .get(url, config)

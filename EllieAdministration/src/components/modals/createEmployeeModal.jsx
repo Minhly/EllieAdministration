@@ -66,8 +66,6 @@ export default function CreateEmployeeModal() {
       active: true,
     };
 
-    console.log(employeeData);
-
     const config = {
       headers: {
         "ngrok-skip-browser-warning": 1,

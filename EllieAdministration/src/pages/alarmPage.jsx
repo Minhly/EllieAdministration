@@ -51,7 +51,6 @@ function AlarmPage() {
       .catch((err) => console.log(err));
   }, []);
 
-  console.log(alarms);
   createData(alarms);
   return (
     <Grid

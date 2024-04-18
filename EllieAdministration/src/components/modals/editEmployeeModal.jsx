@@ -21,8 +21,6 @@ const style = {
 
 export default function EditEmployeeModal(props) {
   const [checked, setChecked] = useState(props.user.active);
-  const handleCalendarClose = () => console.log("Calendar closed");
-  const handleCalendarOpen = () => console.log("Calendar opened");
   const [date, setDate] = useState(new Date(props.user.dateOfBirth));
   const bearerToken = useLoggedInStore((state) => state.bearerToken);
   const [data, setData] = useState({
@@ -97,8 +95,6 @@ export default function EditEmployeeModal(props) {
       .catch((error) => {
         console.log(error.response);
       });
-
-    console.log(employeeData);
   }
 
   const [open, setOpen] = useState(false);

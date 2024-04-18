@@ -58,7 +58,7 @@ const style = {
 export default function UserNotesModal(props) {
   const [notes, SetNotes] = useState([]);
   const bearerToken = useLoggedInStore((state) => state.bearerToken);
-  console.log(notes);
+
   const config = {
     headers: {
       "ngrok-skip-browser-warning": 1,

@@ -30,7 +30,7 @@ export default function EditUserModal(props) {
     points: "",
     contactPersonId: "",
   });
-  console.log(props);
+
   const handleChange = (e) => {
     const value = e.target.value;
     setData({
