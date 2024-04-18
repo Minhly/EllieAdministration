@@ -25,12 +25,12 @@ export default function EditUserModal(props) {
   const [data, setData] = useState({
     firstName: "",
     lastName: "",
-    room: "",
+    room: 1,
     active: "",
     points: "",
     contactPersonId: "",
   });
-
+  console.log(props);
   const handleChange = (e) => {
     const value = e.target.value;
     setData({
@@ -152,6 +152,7 @@ export default function EditUserModal(props) {
               <TextField
                 margin="normal"
                 required
+                type="number"
                 name="room"
                 label="Værelse navn"
                 id="room"

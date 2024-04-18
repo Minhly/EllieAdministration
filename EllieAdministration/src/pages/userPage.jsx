@@ -62,7 +62,7 @@ function EditUser() {
       })
       .catch((err) => console.log(err));
   }, []);
-
+  console.log(users);
   createData(users);
   return (
     <Grid
@@ -174,7 +174,9 @@ function EditUser() {
                   <TableCell align="left">{row.lastName}</TableCell>
                   <TableCell align="left">{row.room}</TableCell>
                   <TableCell align="left">{row.points}</TableCell>
-                  <TableCell align="left">{row.contactPersonId}</TableCell>
+                  <TableCell align="left">
+                    {row.contactPerson.firstName}
+                  </TableCell>
                   <TableCell align="left">{row.active.toString()}</TableCell>
                   <TableCell align="left">
                     <UserAlarmsModal user={row} />

@@ -33,11 +33,12 @@ const style = {
 export default function CreateUserModal() {
   const [employeeContact, setEmployeeContact] = useState("");
   const [employees, setEmployees] = useState([]);
+  const [room, setRoom] = useState([]);
   const bearerToken = useLoggedInStore((state) => state.bearerToken);
   const [data, setData] = useState({
     firstName: "",
     lastName: "",
-    room: "",
+    room: 1,
     active: "",
     points: "",
     contactPersonId: "",
@@ -74,13 +75,17 @@ export default function CreateUserModal() {
     setEmployeeContact(event.target.value);
   };
 
+  const handleSelectChange2 = (event) => {
+    setRoom(event.target.value);
+  };
+
   function handleSubmit(e) {
     e.preventDefault();
 
     const userData = {
       firstName: data.firstName,
       lastName: data.lastName,
-      room: data.room,
+      room: room,
       active: true,
       points: data.points,
       contactPersonId: employeeContact,
@@ -97,7 +102,7 @@ export default function CreateUserModal() {
       .post("https://deep-wealthy-roughy.ngrok-free.app/user", userData, config)
       .then((response) => {
         if (response.status === 201) {
-          //window.location.reload(true);
+          window.location.reload(true);
         } else {
           console.log("failed" + response.body);
         }
@@ -161,25 +166,25 @@ export default function CreateUserModal() {
               <TextField
                 margin="normal"
                 required
-                name="room"
-                label="Værelse navn"
-                id="room"
-                onChange={handleChange}
-                style={{ width: "100%" }}
-              />
-            </Grid>
-
-            <Grid item md={6}>
-              <TextField
-                margin="normal"
-                required
                 name="points"
                 label="Point"
                 id="points"
                 type="number"
                 onChange={handleChange}
-                style={{ width: "95%", marginLeft: "10px" }}
+                style={{ width: "100%" }}
               />
+            </Grid>
+            <Grid item md={12}>
+              <InputLabel id="room">Værelse</InputLabel>
+              <Select
+                id="room"
+                name="room"
+                fullWidth
+                onChange={handleSelectChange2}
+                style={{ width: "100%" }}
+              >
+                <MenuItem value={1}>6B</MenuItem>
+              </Select>
             </Grid>
             <Grid item md={12}>
               <InputLabel id="contactPersonId">Kontaktperson</InputLabel>
