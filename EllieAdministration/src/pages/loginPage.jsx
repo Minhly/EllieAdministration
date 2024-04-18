@@ -91,7 +91,7 @@ function LoginPage() {
   return (
     <Grid container marginTop={25} marginBottom={20}>
       <Grid item md="4"></Grid>
-      <Grid item md="6" padding={10} style={{ backgroundColor: "#fff" }}>
+      <Grid item md="7" padding={10} style={{ backgroundColor: "#fff" }}>
         <Box textAlign="center">
           <Typography
             marginBottom={2}
