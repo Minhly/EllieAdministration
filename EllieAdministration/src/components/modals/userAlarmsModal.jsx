@@ -74,32 +74,31 @@ export default function UserAlarmsModal(props) {
     axios
       .get(url, config)
       .then((res) => {
-        console.log(res.data);
         SetUserAlarms(res.data);
       })
       .catch((err) => console.log(err));
   }, []);
-  /*
-      useEffect(() => {
-        axios
-          .get(url, config)
-          .then((res) => {
-            setFilteredList(res.data);
-          })
-          .catch((err) => console.log(err));
-      }, []);
-    
-      const filterBySearch = (event) => {
-        const query = event.target.value;
-        var updatedList = [...users];
-        updatedList = updatedList.filter((item) => {
-          return (
-            (item.email || "").toLowerCase().indexOf(query.toLowerCase()) !== -1
-          );
-        });
-        setFilteredList(updatedList);
-      };
-    */
+
+  useEffect(() => {
+    axios
+      .get(url, config)
+      .then((res) => {
+        setFilteredList(res.data);
+      })
+      .catch((err) => console.log(err));
+  }, []);
+
+  const filterBySearch = (event) => {
+    const query = event.target.value;
+    var updatedList = [...userAlarms];
+    updatedList = updatedList.filter((item) => {
+      return (
+        (item.name || "").toLowerCase().indexOf(query.toLowerCase()) !== -1
+      );
+    });
+    setFilteredList(updatedList);
+  };
+
   createData(userAlarms);
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
@@ -121,6 +120,12 @@ export default function UserAlarmsModal(props) {
             {props.user.firstName} {props.user.lastName}
           </Typography>
           <Grid container md="12">
+            <TextField
+              id="search-box"
+              label="Filtrere efter Titel"
+              onChange={filterBySearch}
+              style={{ marginBottom: "20px" }}
+            />
             <TableContainer component={Paper}>
               <Table sx={{ minWidth: 650 }} aria-label="simple table">
                 <TableHead>
@@ -152,7 +157,7 @@ export default function UserAlarmsModal(props) {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {userAlarms.map((row) => (
+                  {filteredList.map((row) => (
                     <TableRow
                       key={row.id}
                       sx={{ "&:last-child td, &:last-child th": { border: 0 } }}

@@ -77,7 +77,7 @@ export default function CreateAlarmModal() {
     description: "",
     imageId: "",
     dateValue: "",
-    usersToSetAlarmFor: "",
+    usersToSetAlarmFor: [],
   });
 
   const handleCheckboxChange = (event) => {
@@ -143,6 +143,8 @@ export default function CreateAlarmModal() {
       imageUrl: "data.imageUrl",
       alarmTypeId: !dailyCheck && !weeklyCheck ? 1 : dailyCheck ? 2 : 3,
       active: true,
+      userIds: checked,
+      isAllUsersChecked: checked4,
     };
 
     const config = {

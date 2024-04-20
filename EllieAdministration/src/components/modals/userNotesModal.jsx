@@ -21,6 +21,8 @@ import EditIcon from "@mui/icons-material/Edit";
 import { useLoggedInStore } from "../zustandStore";
 import EventNoteIcon from "@mui/icons-material/EventNote";
 import DescriptionIcon from "@mui/icons-material/Description";
+import CreateNoteModal from "./createNoteModal";
+import EditNoteModal from "./editNoteModal";
 
 function createData(
   id,
@@ -94,14 +96,27 @@ export default function UserNotesModal(props) {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style} component="form" noValidate>
-          <Typography variant="h5">
+          <CreateNoteModal user={props.user} />
+          <Typography variant="h4" sx={{ color: "#6c546f" }}>
             {props.user.firstName} {props.user.lastName}
           </Typography>
           <Grid container md="12">
             {notes.map((row) => (
               <>
-                <Grid item md="12" border={1} padding={2} margin={2}>
-                  <Typography>{row.id}</Typography>
+                <Grid
+                  item
+                  md="12"
+                  sx={{
+                    backgroundColor: "#ece6ff",
+                    borderRadius: "7px",
+                    borderStyle: "dashed",
+                  }}
+                  border={1}
+                  padding={2}
+                  margin={2}
+                >
+                  <EditNoteModal note={row} />
+                  <Typography variant="h6">Note Id: {row.id}</Typography>
                   <Typography>{row.text}</Typography>
                 </Grid>
               </>
