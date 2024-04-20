@@ -127,7 +127,7 @@ function AlarmPage() {
                   sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                 >
                   <TableCell component="th" scope="row">
-                    {row.imageUrl}
+                    <img src={row.imageUrl} width={"50px"} />
                   </TableCell>
                   <TableCell align="left">{row.id}</TableCell>
                   <TableCell align="left">{row.name}</TableCell>

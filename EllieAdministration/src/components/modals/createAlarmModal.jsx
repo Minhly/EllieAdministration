@@ -140,13 +140,13 @@ export default function CreateAlarmModal() {
       name: data.name,
       activatingTime: !dailyCheck && !weeklyCheck ? dateValue : timeValue,
       description: data.description,
-      imageUrl: "data.imageUrl",
+      imageUrl: alarmType.toString(),
       alarmTypeId: !dailyCheck && !weeklyCheck ? 1 : dailyCheck ? 2 : 3,
       active: true,
       userIds: checked,
       isAllUsersChecked: checked4,
     };
-
+    console.log(alarmData);
     const config = {
       headers: {
         "ngrok-skip-browser-warning": 1,
