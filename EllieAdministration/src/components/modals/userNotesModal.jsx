@@ -105,6 +105,7 @@ export default function UserNotesModal(props) {
               <>
                 <Grid
                   item
+                  key={row.id}
                   md="12"
                   sx={{
                     backgroundColor: "#ece6ff",

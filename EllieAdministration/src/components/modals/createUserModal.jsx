@@ -33,7 +33,9 @@ const style = {
 export default function CreateUserModal() {
   const [employeeContact, setEmployeeContact] = useState("");
   const [employees, setEmployees] = useState([]);
-  const [room, setRoom] = useState([]);
+  const [room, setRoom] = useState();
+  const [userId, setUserId] = useState();
+  const [rooms, setRooms] = useState([]);
   const bearerToken = useLoggedInStore((state) => state.bearerToken);
   const [data, setData] = useState({
     firstName: "",
@@ -61,6 +63,16 @@ export default function CreateUserModal() {
       .catch((err) => console.log(err));
   }, []);
 
+  const urlroom = "https://deep-wealthy-roughy.ngrok-free.app/room";
+  useEffect(() => {
+    axios
+      .get(urlroom, config)
+      .then((res) => {
+        setRooms(res.data);
+      })
+      .catch((err) => console.log(err));
+  }, []);
+
   const handleChange = (e) => {
     const value = e.target.value;
     setData({
@@ -83,16 +95,19 @@ export default function CreateUserModal() {
     const userData = {
       firstName: data.firstName,
       lastName: data.lastName,
-      room: room,
       active: true,
       points: data.points,
       contactPersonId: employeeContact,
     };
 
+    const roomData = {
+      userId: userId,
+    };
+
     const config = {
       headers: {
         "ngrok-skip-browser-warning": 1,
-        // Authorization: `Bearer ${bearerToken}`,
+        Authorization: `Bearer ${bearerToken}`,
       },
     };
 
@@ -100,7 +115,24 @@ export default function CreateUserModal() {
       .post("https://deep-wealthy-roughy.ngrok-free.app/user", userData, config)
       .then((response) => {
         if (response.status === 201) {
-          window.location.reload(true);
+          setUserId(response.data.id);
+          roomData.userId = response.data.id;
+          axios
+            .put(
+              "https://deep-wealthy-roughy.ngrok-free.app/room?id=" + room,
+              roomData,
+              config
+            )
+            .then((roomResponse) => {
+              if (roomResponse.status === 200) {
+                window.location.reload(true);
+              } else {
+                console.log("failed" + roomResponse.body);
+              }
+            })
+            .catch((error) => {
+              console.log(error.roomResponse);
+            });
         } else {
           console.log("failed" + response.body);
         }
@@ -108,6 +140,7 @@ export default function CreateUserModal() {
       .catch((error) => {
         console.log(error.response);
       });
+    console.log(roomData, room);
   }
 
   const [open, setOpen] = useState(false);
@@ -160,31 +193,21 @@ export default function CreateUserModal() {
                 style={{ width: "95%", marginLeft: "10px" }}
               />
             </Grid>
-            <Grid item md={6}>
-              <TextField
-                margin="normal"
-                required
-                name="points"
-                label="Point"
-                id="points"
-                type="number"
-                onChange={handleChange}
-                style={{ width: "100%" }}
-              />
-            </Grid>
             <Grid item md={12}>
               <InputLabel id="room">Værelse</InputLabel>
               <Select
                 id="room"
                 name="room"
-                fullWidth
+                required
                 onChange={handleSelectChange2}
                 style={{ width: "100%" }}
               >
-                <MenuItem value={1}>6B</MenuItem>
+                {rooms.map((row) => (
+                  <MenuItem value={row.id}>{row.name}</MenuItem>
+                ))}
               </Select>
             </Grid>
-            <Grid item md={12}>
+            <Grid item md={12} sx={{ marginTop: "10px" }}>
               <InputLabel id="contactPersonId">Kontaktperson</InputLabel>
               <Select
                 id="contactPersonId"
@@ -197,6 +220,18 @@ export default function CreateUserModal() {
                   <MenuItem value={row.id}>{row.email}</MenuItem>
                 ))}
               </Select>
+            </Grid>
+            <Grid item md={6}>
+              <TextField
+                margin="normal"
+                required
+                name="points"
+                label="Point"
+                id="points"
+                type="number"
+                onChange={handleChange}
+                style={{ width: "100%" }}
+              />
             </Grid>
             <Grid item md="12">
               <Button

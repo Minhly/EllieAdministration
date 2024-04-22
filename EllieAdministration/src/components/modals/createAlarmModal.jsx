@@ -183,6 +183,8 @@ export default function CreateAlarmModal() {
           color: "green",
           fontWeight: "bold",
           border: "solid 2px",
+          float: "right",
+          marginRight: "20px",
           backgroundColor: "#C1E1C1",
         }}
         size="large"
@@ -339,7 +341,7 @@ export default function CreateAlarmModal() {
                   dense
                   sx={{
                     width: "100%",
-                    maxWidth: 360,
+                    maxWidth: 560,
                     borderLeft: 1,
                     padding: 2,
                     bgcolor: "background.paper",
@@ -372,7 +374,7 @@ export default function CreateAlarmModal() {
                           </ListItemAvatar>
                           <ListItemText
                             id={labelId}
-                            primary={`${value.firstName}`}
+                            primary={`${value.firstName} ${value.lastName}`}
                           />
                         </ListItemButton>
                       </ListItem>

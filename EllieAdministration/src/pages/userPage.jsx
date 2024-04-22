@@ -43,7 +43,7 @@ function createData(
 
 function EditUser() {
   const [users, setUsers] = useState([]);
-
+  const [filteredList, setFilteredList] = useState([]);
   const bearerToken = useLoggedInStore((state) => state.bearerToken);
 
   const config = {
@@ -172,7 +172,7 @@ function EditUser() {
                   </TableCell>
                   <TableCell align="left">{row.firstName}</TableCell>
                   <TableCell align="left">{row.lastName}</TableCell>
-                  <TableCell align="left">{row.room}</TableCell>
+                  <TableCell align="left">{row.rooms[0].name}</TableCell>
                   <TableCell align="left">{row.points}</TableCell>
                   <TableCell align="left">
                     {row.contactPerson.firstName}

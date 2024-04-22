@@ -73,6 +73,30 @@ function AlarmPage() {
     setFilteredList(updatedList);
   };
 
+  const filterBySearchTitle = (event) => {
+    const query = event.target.value;
+    var updatedList = [...alarms];
+    updatedList = updatedList.filter((item) => {
+      return (
+        (item.name || "").toLowerCase().indexOf(query.toLowerCase()) !== -1
+      );
+    });
+    setFilteredList(updatedList);
+  };
+
+  const filterBySearchAlarm = (event) => {
+    const query = event.target.value;
+    var updatedList = [...alarms];
+    updatedList = updatedList.filter((item) => {
+      return (
+        (item.activatingTime || "")
+          .toLowerCase()
+          .indexOf(query.toLowerCase()) !== -1
+      );
+    });
+    setFilteredList(updatedList);
+  };
+
   createData(alarms);
   return (
     <Grid
@@ -106,17 +130,48 @@ function AlarmPage() {
           <CreateAlarmModal />
         </div>
         <TableContainer style={{ maxHeight: 800 }} component={Paper}>
-          <TextField
-            id="search-box"
-            label="Filtrere efter Beboer"
-            onChange={filterBySearch}
-            style={{
-              marginBottom: "20px",
-              float: "left",
-              marginLeft: "50px",
-              marginTop: "20px",
-            }}
-          />
+          <Grid
+            container
+            md="12"
+            alignContent={"center"}
+            alignItems={"center"}
+            sx={{ display: "flex", alignItems: "center" }}
+          >
+            <TextField
+              id="search-box"
+              label="Filtrere efter Beboer"
+              onChange={filterBySearch}
+              style={{
+                marginBottom: "20px",
+                float: "left",
+                marginLeft: "50px",
+                marginTop: "20px",
+              }}
+            />
+            <TextField
+              id="search-box"
+              label="Filtrere efter Titler"
+              onChange={filterBySearchTitle}
+              style={{
+                marginBottom: "20px",
+                float: "left",
+                marginLeft: "50px",
+                marginTop: "20px",
+              }}
+            />
+            <TextField
+              id="search-box"
+              label="Filtrere efter Alarm tid"
+              onChange={filterBySearchAlarm}
+              style={{
+                marginBottom: "20px",
+                float: "left",
+                marginLeft: "50px",
+                marginTop: "20px",
+              }}
+            />
+          </Grid>
+
           <Table sx={{ minWidth: 650 }} aria-label="simple table">
             <TableHead>
               <TableRow style={{ backgroundColor: "#f5f5f5", height: "35px" }}>
