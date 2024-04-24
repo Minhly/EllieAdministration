@@ -7,6 +7,7 @@ import GroupIcon from "@mui/icons-material/Group";
 import BadgeIcon from "@mui/icons-material/Badge";
 import AccessAlarmIcon from "@mui/icons-material/AccessAlarm";
 import { useLoggedInStore } from "../components/zustandStore";
+import HelpCenterIcon from "@mui/icons-material/HelpCenter";
 
 function Sidebar2() {
   const setIsLoggedIn = useLoggedInStore((state) => state.setIsLoggedIn);
@@ -78,7 +79,7 @@ function Sidebar2() {
             ) : null}
             <MenuItem
               component={<Link to="/pages/tutorial" />}
-              icon={<CalendarTodayIcon style={{ color: "#fff" }} />}
+              icon={<HelpCenterIcon style={{ color: "#fff" }} />}
             >
               Vejledning
             </MenuItem>

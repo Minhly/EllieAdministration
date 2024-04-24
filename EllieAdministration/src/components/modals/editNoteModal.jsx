@@ -52,7 +52,7 @@ export default function EditNoteModal(props) {
 
     axios
       .put(
-        "https://deep-wealthy-roughy.ngrok-free.app/note?id=" + props.note.id,
+        "https://totally-helpful-krill.ngrok-free.app/note?id=" + props.note.id,
         noteData,
         config
       )

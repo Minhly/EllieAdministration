@@ -1,4 +1,13 @@
-import { Grid, TextField, Typography, Box, Button } from "@mui/material";
+import {
+  Grid,
+  TextField,
+  Typography,
+  Box,
+  InputLabel,
+  Button,
+  Select,
+  MenuItem,
+} from "@mui/material";
 import axios from "axios";
 import { useState } from "react";
 import Modal from "@mui/material/Modal";
@@ -21,8 +30,8 @@ const style = {
 
 export default function EditEmployeeModal(props) {
   const [checked, setChecked] = useState(props.user.active);
-  const [date, setDate] = useState(new Date(props.user.dateOfBirth));
   const bearerToken = useLoggedInStore((state) => state.bearerToken);
+  const [roleA, setRole] = useState("");
   const [data, setData] = useState({
     firstName: "",
     lastName: "",
@@ -38,6 +47,10 @@ export default function EditEmployeeModal(props) {
       ...data,
       [e.target.name]: value,
     });
+  };
+
+  const handleSelectChange = (event) => {
+    setRole(event.target.value);
   };
 
   const handleCheckboxChange = (event) => {
@@ -64,11 +77,9 @@ export default function EditEmployeeModal(props) {
       roleId:
         data.roleId == null || data.roleId.length < 1
           ? props.user.roleId
-          : data.roleId,
-      instituteId:
-        data.instituteId == null || data.instituteId.length < 1
-          ? props.user.instituteId
-          : data.instituteId,
+          : roleA,
+      instituteId: 1,
+      active: checked,
     };
 
     const config = {
@@ -80,7 +91,7 @@ export default function EditEmployeeModal(props) {
 
     axios
       .put(
-        "https://deep-wealthy-roughy.ngrok-free.app/employee?id=" +
+        "https://totally-helpful-krill.ngrok-free.app/employee?id=" +
           props.user.id,
         employeeData,
         config
@@ -136,18 +147,19 @@ export default function EditEmployeeModal(props) {
                 style={{ width: "95%", marginLeft: "10px" }}
               />
             </Grid>
-            <Grid item md="6">
-              <TextField
-                margin="normal"
-                required
-                name="roleId"
-                type="number"
+            <Grid item md={6}>
+              <InputLabel id="imageId">Rolle</InputLabel>
+              <Select
+                id="role"
+                name="role"
                 defaultValue={props.user.roleId}
-                label="Rolle"
-                id="roleId"
-                onChange={handleChange}
+                required
+                onChange={handleSelectChange}
                 style={{ width: "100%" }}
-              />
+              >
+                <MenuItem value={1}>Admin</MenuItem>
+                <MenuItem value={2}>Pædagog</MenuItem>
+              </Select>
             </Grid>
             <Grid item md="6">
               <TextField
@@ -162,17 +174,19 @@ export default function EditEmployeeModal(props) {
               />
             </Grid>
             <Grid item md="6">
-              <TextField
-                margin="normal"
-                type="number"
-                required
-                name="instituteId"
-                label="Institut"
-                onChange={handleChange}
-                id="instituteId"
-                defaultValue={props.user.instituteId}
-                style={{ width: "100%" }}
-              />
+              <Grid item md="6" marginTop={1}>
+                <Typography style={{ marginLeft: "15px" }}>
+                  Konto aktiv
+                </Typography>
+                <Checkbox
+                  label="Aktiv"
+                  checked={checked}
+                  size="large"
+                  style={{ marginLeft: "25px" }}
+                  onChange={handleCheckboxChange}
+                  inputProps={{ "aria-label": "controlled" }}
+                />
+              </Grid>
             </Grid>
             {/*<Grid item md="6">
               <TextField

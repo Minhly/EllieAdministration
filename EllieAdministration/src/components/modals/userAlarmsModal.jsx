@@ -67,7 +67,7 @@ export default function UserAlarmsModal(props) {
   };
 
   const url =
-    "https://deep-wealthy-roughy.ngrok-free.app/UserAlarmRelation/GetAlarmsByUserId/id?id=" +
+    "https://totally-helpful-krill.ngrok-free.app/UserAlarmRelation/GetAlarmsByUserId/id?id=" +
     props.user.id;
 
   useEffect(() => {

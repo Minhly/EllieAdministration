@@ -42,7 +42,7 @@ function AlarmPage() {
     },
   };
 
-  const url = "https://deep-wealthy-roughy.ngrok-free.app/alarm/WithUsers";
+  const url = "https://totally-helpful-krill.ngrok-free.app/alarm/WithUsers";
   useEffect(() => {
     axios
       .get(url, config)
@@ -224,10 +224,15 @@ function AlarmPage() {
                     <img src={row.imageUrl} width={"50px"} />
                   </TableCell>
                   <TableCell align="left">{row.id}</TableCell>
-                  <TableCell align="left">{row.name}</TableCell>
-                  <TableCell align="left">{row.description}</TableCell>
                   <TableCell align="left">
-                    {row.user.firstName} {row.user.lastName}
+                    {row.name.toString().toLowerCase()}
+                  </TableCell>
+                  <TableCell align="left">
+                    {row.description.toString().toLowerCase()}
+                  </TableCell>
+                  <TableCell align="left">
+                    {row.user.firstName?.toString().toLowerCase()}{" "}
+                    {row.user.lastName?.toString().toLowerCase()}
                   </TableCell>
                   <TableCell align="left">{row.activatingTime}</TableCell>
                   <TableCell align="left">

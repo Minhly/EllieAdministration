@@ -68,7 +68,7 @@ export default function UserNotesModal(props) {
     },
   };
   const url =
-    "https://deep-wealthy-roughy.ngrok-free.app/Note/GetNoteByUserId/id?id=" +
+    "https://totally-helpful-krill.ngrok-free.app/Note/GetNoteByUserId/id?id=" +
     props.user.id;
 
   useEffect(() => {

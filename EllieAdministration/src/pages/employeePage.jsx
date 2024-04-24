@@ -41,7 +41,7 @@ function createData(
 
 function EmployeePage() {
   const [employees, setEmployees] = useState([]);
-
+  const [filteredList, setFilteredList] = useState([]);
   const bearerToken = useLoggedInStore((state) => state.bearerToken);
 
   const config = {
@@ -51,7 +51,7 @@ function EmployeePage() {
     },
   };
 
-  const url = "https://deep-wealthy-roughy.ngrok-free.app/employee";
+  const url = "https://totally-helpful-krill.ngrok-free.app/employee";
   useEffect(() => {
     axios
       .get(url, config)
@@ -60,6 +60,38 @@ function EmployeePage() {
       })
       .catch((err) => console.log(err));
   }, []);
+
+  useEffect(() => {
+    axios
+      .get(url, config)
+      .then((res) => {
+        setFilteredList(res.data);
+      })
+      .catch((err) => console.log(err));
+  }, []);
+
+  const filterBySearch = (event) => {
+    const query = event.target.value;
+    var updatedList = [...employees];
+    updatedList = updatedList.filter((item) => {
+      return (
+        (item.lastName || "").toLowerCase().includes(query) ||
+        (item.firstName || "").toLowerCase().includes(query)
+      );
+    });
+    setFilteredList(updatedList);
+  };
+
+  const filterBySearchEmail = (event) => {
+    const query = event.target.value;
+    var updatedList = [...employees];
+    updatedList = updatedList.filter((item) => {
+      return (
+        (item.email || "").toLowerCase().indexOf(query.toLowerCase()) !== -1
+      );
+    });
+    setFilteredList(updatedList);
+  };
 
   createData(employees);
   return (
@@ -93,7 +125,29 @@ function EmployeePage() {
         >
           <CreateEmployeeModal />
         </div>
-        <TableContainer style={{ maxHeight: 600 }} component={Paper}>
+        <TableContainer style={{ maxHeight: 800 }} component={Paper}>
+          <TextField
+            id="search-box"
+            label="Filtrere efter Email"
+            onChange={filterBySearchEmail}
+            style={{
+              marginBottom: "20px",
+              float: "left",
+              marginLeft: "50px",
+              marginTop: "20px",
+            }}
+          />
+          <TextField
+            id="search-box"
+            label="Filtrere efter For/Efternavn"
+            onChange={filterBySearch}
+            style={{
+              marginBottom: "20px",
+              float: "left",
+              marginLeft: "50px",
+              marginTop: "20px",
+            }}
+          />
           <Table sx={{ minWidth: 650 }} aria-label="simple table">
             <TableHead>
               <TableRow style={{ backgroundColor: "#f5f5f5", height: "35px" }}>
@@ -133,11 +187,17 @@ function EmployeePage() {
                 >
                   Institut
                 </TableCell>
+                <TableCell
+                  align="left"
+                  sx={{ fontWeight: "bold", color: "#304674" }}
+                >
+                  Aktiv
+                </TableCell>
                 <TableCell align="left"></TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {employees.map((row) => (
+              {filteredList.map((row) => (
                 <TableRow
                   key={row.id}
                   sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
@@ -145,13 +205,24 @@ function EmployeePage() {
                   <TableCell component="th" scope="row">
                     {row.id}
                   </TableCell>
-                  <TableCell align="left">{row.firstName}</TableCell>
-                  <TableCell align="left">{row.lastName}</TableCell>
-                  <TableCell align="left">{row.email}</TableCell>
                   <TableCell align="left">
-                    {row.roleId == 1 ? "Administrator" : "Pædagog"}
+                    {row.firstName.toString().toLowerCase()}
                   </TableCell>
-                  <TableCell align="left">{row.institute.name}</TableCell>
+                  <TableCell align="left">
+                    {row.lastName.toString().toLowerCase()}
+                  </TableCell>
+                  <TableCell align="left">
+                    {row.email.toString().toLowerCase()}
+                  </TableCell>
+                  <TableCell align="left">
+                    {row.roleId == 1 ? "administrator" : "pædagog"}
+                  </TableCell>
+                  <TableCell align="left">
+                    {row.institute.name.toString().toLowerCase()}
+                  </TableCell>
+                  <TableCell align="left">
+                    {row.active.toString() == "true" ? "ja" : "nej"}
+                  </TableCell>
                   <TableCell align="left">
                     <EditEmployeeModal user={row} />
                   </TableCell>

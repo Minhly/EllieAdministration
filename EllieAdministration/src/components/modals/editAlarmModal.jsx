@@ -40,7 +40,9 @@ const style = {
 
 export default function EditAlarmModal(props) {
   const [alarmType, setAlarmType] = useState("");
+  const [alarmTypeImg, setAlarmTypeImg] = useState("");
   const [dateValue, setDateValue] = useState(dayjs());
+  const [checked, setChecked] = useState(props.alarm.active);
   const [timeValue, setTimeValue] = useState(dayjs());
   const [dailyCheck, setDailyCheck] = useState(false);
   const [weeklyCheck, setWeeklyCheck] = useState(false);
@@ -69,6 +71,10 @@ export default function EditAlarmModal(props) {
     }
   }, []);
 
+  const handleCheckboxChange = (event) => {
+    setChecked(event.target.checked);
+  };
+
   const handleCheckboxChange3 = (event) => {
     setDailyCheck(event.target.checked);
     setAlarmType(2);
@@ -77,6 +83,10 @@ export default function EditAlarmModal(props) {
   const handleCheckboxChange2 = (event) => {
     setWeeklyCheck(event.target.checked);
     setAlarmType(3);
+  };
+
+  const handleSelectChange = (event) => {
+    setAlarmTypeImg(event.target.value);
   };
 
   function handleSubmit(e) {
@@ -89,9 +99,9 @@ export default function EditAlarmModal(props) {
           ? props.alarm.name
           : data.name,
       imageUrl:
-        data.imageUrl == null || data.imageUrl.length < 1
+        alarmTypeImg == null || alarmTypeImg.length < 1
           ? props.alarm.imageUrl
-          : data.imageUrl,
+          : alarmTypeImg.toString(),
       description:
         data.description == null || data.description.length < 1
           ? props.alarm.description
@@ -109,6 +119,7 @@ export default function EditAlarmModal(props) {
           ? dateValue
           : timeValue,
     };
+    console.log(alarmData);
 
     const config = {
       headers: {
@@ -119,7 +130,8 @@ export default function EditAlarmModal(props) {
 
     axios
       .put(
-        "https://deep-wealthy-roughy.ngrok-free.app/alarm?id=" + props.alarm.id,
+        "https://totally-helpful-krill.ngrok-free.app/alarm?id=" +
+          props.alarm.id,
         alarmData,
         config
       )
@@ -127,7 +139,7 @@ export default function EditAlarmModal(props) {
         if (response.status === 200) {
           window.location.reload(true);
         } else {
-          console.log("failed" + response.status);
+          console.log("failed" + response.body);
         }
       })
       .catch((error) => {
@@ -162,17 +174,24 @@ export default function EditAlarmModal(props) {
                 style={{ width: "100%" }}
               />
             </Grid>
-            <Grid item md="6">
-              <TextField
-                margin="normal"
+            <Grid item md="12">
+              <InputLabel id="imageId">Alarm type</InputLabel>
+              <Select
+                id="imageId"
+                name="imageId"
                 required
-                name="imageUrl"
-                defaultValue={props.alarm.imageUrl}
-                label="Billede"
-                id="imageUrl"
-                onChange={handleChange}
-                style={{ width: "95%", marginLeft: "10px" }}
-              />
+                onChange={handleSelectChange}
+                style={{ width: "100%" }}
+              >
+                <MenuItem value={1}>Medicin</MenuItem>
+                <MenuItem value={2}>Morgenmad</MenuItem>
+                <MenuItem value={3}>Frokost</MenuItem>
+                <MenuItem value={4}>Aftensmad</MenuItem>
+                <MenuItem value={5}>Terapi</MenuItem>
+                <MenuItem value={6}>Træning</MenuItem>
+                <MenuItem value={7}>Studér</MenuItem>
+                <MenuItem value={8}>Andet</MenuItem>
+              </Select>
             </Grid>
             {!dailyCheck && !weeklyCheck ? (
               <Grid item md={8} marginTop={2}>
@@ -272,6 +291,19 @@ export default function EditAlarmModal(props) {
                 onChange={handleChange}
                 defaultValue={props.alarm.description}
                 style={{ width: "100%" }}
+              />
+            </Grid>
+            <Grid item md="6" marginTop={1}>
+              <Typography style={{ marginLeft: "15px" }}>
+                Alarm aktiv
+              </Typography>
+              <Checkbox
+                label="Aktiv"
+                checked={checked}
+                size="large"
+                style={{ marginLeft: "25px" }}
+                onChange={handleCheckboxChange}
+                inputProps={{ "aria-label": "controlled" }}
               />
             </Grid>
             <Grid item md="12">

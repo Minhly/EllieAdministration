@@ -116,7 +116,7 @@ export default function CreateAlarmModal() {
     },
   };
 
-  const url = "https://deep-wealthy-roughy.ngrok-free.app/user";
+  const url = "https://totally-helpful-krill.ngrok-free.app/user";
   useEffect(() => {
     axios
       .get(url, config)
@@ -156,7 +156,7 @@ export default function CreateAlarmModal() {
 
     axios
       .post(
-        "https://deep-wealthy-roughy.ngrok-free.app/alarm",
+        "https://totally-helpful-krill.ngrok-free.app/alarm",
         alarmData,
         config
       )
@@ -199,7 +199,7 @@ export default function CreateAlarmModal() {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box sx={style} component="form" onSubmit={handleSubmit} noValidate>
+        <Box sx={style} component="form" onSubmit={handleSubmit}>
           <Typography variant="h5">Opret alarm</Typography>
           <Grid container md={12} spacing={2}>
             <Grid item md={6}>
@@ -220,6 +220,7 @@ export default function CreateAlarmModal() {
                 onChange={handleChange}
                 label="Beskrivelse"
                 multiline
+                required
                 rows={5}
                 fullWidth
               />
@@ -229,16 +230,18 @@ export default function CreateAlarmModal() {
               <Select
                 id="imageId"
                 name="imageId"
+                required
                 onChange={handleSelectChange}
                 style={{ width: "100%" }}
               >
-                <MenuItem value={1}>Medicine</MenuItem>
-                <MenuItem value={2}>Breakfast</MenuItem>
-                <MenuItem value={3}>Lunch</MenuItem>
-                <MenuItem value={4}>Dinner</MenuItem>
-                <MenuItem value={5}>Therapy</MenuItem>
-                <MenuItem value={6}>Training</MenuItem>
-                <MenuItem value={7}>Study</MenuItem>
+                <MenuItem value={1}>Medicin</MenuItem>
+                <MenuItem value={2}>Morgenmad</MenuItem>
+                <MenuItem value={3}>Frokost</MenuItem>
+                <MenuItem value={4}>Aftensmad</MenuItem>
+                <MenuItem value={5}>Terapi</MenuItem>
+                <MenuItem value={6}>Træning</MenuItem>
+                <MenuItem value={7}>Studér</MenuItem>
+                <MenuItem value={8}>Andet</MenuItem>
               </Select>
             </Grid>
             {!dailyCheck && !weeklyCheck ? (

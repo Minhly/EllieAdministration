@@ -53,7 +53,7 @@ function EditUser() {
     },
   };
 
-  const url = "https://deep-wealthy-roughy.ngrok-free.app/user";
+  const url = "https://totally-helpful-krill.ngrok-free.app/user";
   useEffect(() => {
     axios
       .get(url, config)
@@ -62,6 +62,40 @@ function EditUser() {
       })
       .catch((err) => console.log(err));
   }, []);
+
+  useEffect(() => {
+    axios
+      .get(url, config)
+      .then((res) => {
+        setFilteredList(res.data);
+      })
+      .catch((err) => console.log(err));
+  }, []);
+
+  const filterBySearch = (event) => {
+    const query = event.target.value;
+    var updatedList = [...users];
+    updatedList = updatedList.filter((item) => {
+      return (
+        (item.lastName || "").toLowerCase().includes(query) ||
+        (item.firstName || "").toLowerCase().includes(query)
+      );
+    });
+    setFilteredList(updatedList);
+  };
+
+  const filterBySearchRoom = (event) => {
+    const query = event.target.value;
+    var updatedList = [...users];
+    updatedList = updatedList.filter((item) => {
+      return (
+        (item.rooms[0].name || "")
+          .toLowerCase()
+          .indexOf(query.toLowerCase()) !== -1
+      );
+    });
+    setFilteredList(updatedList);
+  };
 
   createData(users);
   return (
@@ -95,7 +129,29 @@ function EditUser() {
         >
           <CreateUserModal />
         </div>
-        <TableContainer style={{ maxHeight: 600 }} component={Paper}>
+        <TableContainer style={{ maxHeight: 800 }} component={Paper}>
+          <TextField
+            id="search-box"
+            label="Filtrere efter For/Efternavn"
+            onChange={filterBySearch}
+            style={{
+              marginBottom: "20px",
+              float: "left",
+              marginLeft: "50px",
+              marginTop: "20px",
+            }}
+          />
+          <TextField
+            id="search-box"
+            label="Filtrere efter Værelse"
+            onChange={filterBySearchRoom}
+            style={{
+              marginBottom: "20px",
+              float: "left",
+              marginLeft: "50px",
+              marginTop: "20px",
+            }}
+          />
           <Table sx={{ minWidth: 650 }} aria-label="simple table">
             <TableHead>
               <TableRow style={{ backgroundColor: "#f5f5f5", height: "35px" }}>
@@ -162,7 +218,7 @@ function EditUser() {
               </TableRow>
             </TableHead>
             <TableBody>
-              {users.map((row) => (
+              {filteredList.map((row) => (
                 <TableRow
                   key={row.id}
                   sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
@@ -170,14 +226,22 @@ function EditUser() {
                   <TableCell component="th" scope="row">
                     {row.id}
                   </TableCell>
-                  <TableCell align="left">{row.firstName}</TableCell>
-                  <TableCell align="left">{row.lastName}</TableCell>
-                  <TableCell align="left">{row.rooms[0].name}</TableCell>
+                  <TableCell align="left">
+                    {row.firstName.toString().toLowerCase()}
+                  </TableCell>
+                  <TableCell align="left">
+                    {row.lastName.toString().toLowerCase()}
+                  </TableCell>
+                  <TableCell align="left">
+                    {row.rooms[0].name.toString().toLowerCase()}
+                  </TableCell>
                   <TableCell align="left">{row.points}</TableCell>
                   <TableCell align="left">
-                    {row.contactPerson.firstName}
+                    {row.contactPerson.firstName.toString().toLowerCase()}
                   </TableCell>
-                  <TableCell align="left">{row.active.toString()}</TableCell>
+                  <TableCell align="left">
+                    {row.active.toString() == "true" ? "ja" : "nej"}
+                  </TableCell>
                   <TableCell align="left">
                     <UserAlarmsModal user={row} />
                   </TableCell>

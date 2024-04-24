@@ -84,7 +84,11 @@ export default function CreateNoteModal(props) {
     };
 
     axios
-      .post("https://deep-wealthy-roughy.ngrok-free.app/note", noteData, config)
+      .post(
+        "https://totally-helpful-krill.ngrok-free.app/note",
+        noteData,
+        config
+      )
       .then((response) => {
         if (response.status === 201) {
           window.location.reload(true);
@@ -123,7 +127,7 @@ export default function CreateNoteModal(props) {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box sx={style} component="form" onSubmit={handleSubmit} noValidate>
+        <Box sx={style} component="form" onSubmit={handleSubmit}>
           <Typography variant="h5">
             Opret Note for {props.user.firstName} {props.user.lastName}
           </Typography>

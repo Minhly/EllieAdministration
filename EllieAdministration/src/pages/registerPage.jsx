@@ -71,7 +71,7 @@ function RegisterPage() {
     try {
       axios
         .post(
-          "https://deep-wealthy-roughy.ngrok-free.app/User/CreateUser",
+          "https://totally-helpful-krill.ngrok-free.app/User/CreateUser",
           userData,
           config
         )

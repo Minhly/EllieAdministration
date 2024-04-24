@@ -53,7 +53,7 @@ export default function CreateUserModal() {
     },
   };
 
-  const url = "https://deep-wealthy-roughy.ngrok-free.app/employee";
+  const url = "https://totally-helpful-krill.ngrok-free.app/employee";
   useEffect(() => {
     axios
       .get(url, config)
@@ -63,7 +63,7 @@ export default function CreateUserModal() {
       .catch((err) => console.log(err));
   }, []);
 
-  const urlroom = "https://deep-wealthy-roughy.ngrok-free.app/room";
+  const urlroom = "https://totally-helpful-krill.ngrok-free.app/room";
   useEffect(() => {
     axios
       .get(urlroom, config)
@@ -112,14 +112,18 @@ export default function CreateUserModal() {
     };
 
     axios
-      .post("https://deep-wealthy-roughy.ngrok-free.app/user", userData, config)
+      .post(
+        "https://totally-helpful-krill.ngrok-free.app/user",
+        userData,
+        config
+      )
       .then((response) => {
         if (response.status === 201) {
           setUserId(response.data.id);
           roomData.userId = response.data.id;
           axios
             .put(
-              "https://deep-wealthy-roughy.ngrok-free.app/room?id=" + room,
+              "https://totally-helpful-krill.ngrok-free.app/room?id=" + room,
               roomData,
               config
             )
@@ -140,7 +144,6 @@ export default function CreateUserModal() {
       .catch((error) => {
         console.log(error.response);
       });
-    console.log(roomData, room);
   }
 
   const [open, setOpen] = useState(false);
@@ -153,6 +156,8 @@ export default function CreateUserModal() {
           marginTop: "10px",
           color: "#6c546f",
           fontWeight: "bold",
+          float: "right",
+          marginRight: "20px",
           border: "solid 2px",
           backgroundColor: "#ece6ff",
         }}
@@ -168,7 +173,7 @@ export default function CreateUserModal() {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box sx={style} component="form" onSubmit={handleSubmit} noValidate>
+        <Box sx={style} component="form" onSubmit={handleSubmit}>
           <Typography variant="h5">Opret Bruger</Typography>
           <Grid container md={12}>
             <Grid item md={6}>
@@ -224,7 +229,6 @@ export default function CreateUserModal() {
             <Grid item md={6}>
               <TextField
                 margin="normal"
-                required
                 name="points"
                 label="Point"
                 id="points"

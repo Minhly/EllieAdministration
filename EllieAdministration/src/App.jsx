@@ -11,9 +11,9 @@ import ellie from "../src/assets/Elliez4.png";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import LoginPage from "./pages/loginPage.jsx";
-import RegisterPage from "./pages/registerPage.jsx";
 import PageNotFound from "./pages/pageNotFound.jsx";
 import { useLoggedInStore } from "./components/zustandStore.jsx";
+import TutorialPage from "./pages/tutorialPage.jsx";
 
 function App() {
   const isLoggedIn = useLoggedInStore((state) => state.isLoggedIn);
@@ -39,7 +39,7 @@ function App() {
                   <Route path="/pages/employees" element={<EmployeePage />} />
                   <Route path="/pages/users" element={<EditUser />} />
                   <Route path="/pages/alarms" element={<AlarmPage />} />
-                  <Route path="/pages/register" element={<RegisterPage />} />
+                  <Route path="/pages/tutorial" element={<TutorialPage />} />
                   <Route path="*" element={<PageNotFound />} />
                 </Routes>
               </Grid>

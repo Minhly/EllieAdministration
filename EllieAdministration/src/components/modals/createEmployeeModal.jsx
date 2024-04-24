@@ -62,7 +62,7 @@ export default function CreateEmployeeModal() {
       email: data.email,
       password: data.password,
       roleId: roleA,
-      instituteId: data.instituteId,
+      instituteId: 1,
       active: true,
     };
 
@@ -75,7 +75,7 @@ export default function CreateEmployeeModal() {
 
     axios
       .post(
-        "https://deep-wealthy-roughy.ngrok-free.app/employee",
+        "https://totally-helpful-krill.ngrok-free.app/employee",
         employeeData,
         config
       )
@@ -101,6 +101,8 @@ export default function CreateEmployeeModal() {
           marginTop: "10px",
           color: "#304674",
           fontWeight: "bold",
+          float: "right",
+          marginRight: "20px",
           border: "solid 2px",
           backgroundColor: "#d8e1e8",
         }}
@@ -116,7 +118,7 @@ export default function CreateEmployeeModal() {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box sx={style} component="form" onSubmit={handleSubmit} noValidate>
+        <Box sx={style} component="form" onSubmit={handleSubmit}>
           <Typography variant="h5">Opret Spil</Typography>
           <Grid container md={12}>
             <Grid item md={6}>
@@ -169,24 +171,13 @@ export default function CreateEmployeeModal() {
               <Select
                 id="role"
                 name="role"
+                required
                 onChange={handleSelectChange}
                 style={{ width: "100%" }}
               >
                 <MenuItem value={1}>Admin</MenuItem>
                 <MenuItem value={2}>Pædagog</MenuItem>
               </Select>
-            </Grid>
-            <Grid item md={12}>
-              <TextField
-                margin="normal"
-                required
-                type="number"
-                name="institute"
-                label="Institut"
-                onChange={handleChange}
-                id="institute"
-                style={{ width: "50%" }}
-              />
             </Grid>
             <Grid item md="12">
               <Button
