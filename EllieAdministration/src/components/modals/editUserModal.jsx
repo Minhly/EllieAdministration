@@ -32,7 +32,7 @@ const style = {
 export default function EditUserModal(props) {
   const [checked, setChecked] = useState(props.user.active);
   const bearerToken = useLoggedInStore((state) => state.bearerToken);
-  const [room, setRoom] = useState(props.user.rooms[0].name);
+  const [room, setRoom] = useState(props.user.rooms[0].id);
   const [rooms, setRooms] = useState([]);
   const [employeeContact, setEmployeeContact] = useState("");
   const [employees, setEmployees] = useState([]);
