@@ -25,6 +25,8 @@ import {
   TimePicker,
 } from "@mui/x-date-pickers";
 import { useEffect } from "react";
+import utc from "dayjs/plugin/utc";
+import timezone from "dayjs/plugin/timezone";
 
 const style = {
   position: "absolute",
@@ -37,6 +39,9 @@ const style = {
   boxShadow: 24,
   p: 4,
 };
+
+dayjs.extend(utc);
+dayjs.extend(timezone);
 
 export default function EditAlarmModal(props) {
   const [alarmType, setAlarmType] = useState("");
@@ -54,6 +59,9 @@ export default function EditAlarmModal(props) {
     alarmTypeId: "",
     activatingTime: "",
   });
+
+  dayjs.extend(utc);
+  dayjs.extend(timezone);
 
   const handleChange = (e) => {
     const value = e.target.value;
@@ -88,7 +96,7 @@ export default function EditAlarmModal(props) {
   const handleSelectChange = (event) => {
     setAlarmTypeImg(event.target.value);
   };
-
+  console.log(alarmType);
   function handleSubmit(e) {
     e.preventDefault();
 
@@ -107,13 +115,16 @@ export default function EditAlarmModal(props) {
           ? props.alarm.description
           : data.description,
       alarmTypeId:
-        data.alarmTypeId == null || data.alarmTypeId.length < 1
+        alarmType == null || alarmType < 1
           ? props.alarm.alarmTypeId
           : !dailyCheck && !weeklyCheck
           ? 1
           : alarmType,
       activatingTime:
-        data.activatingTime == null || data.activatingTime.length < 1
+        dateValue == null ||
+        timeValue == null ||
+        dateValue.length < 1 ||
+        timeValue.length < 1
           ? props.alarm.activatingTime
           : !dailyCheck && !weeklyCheck
           ? dateValue
@@ -196,9 +207,9 @@ export default function EditAlarmModal(props) {
             {!dailyCheck && !weeklyCheck ? (
               <Grid item md={8} marginTop={2}>
                 <MobileDateTimePicker
+                  timezone={"UTC"}
                   label="Dag og tidspunkt for alarm"
                   disablePast={true}
-                  required
                   ampm={false}
                   defaultValue={dayjs(props.alarm.activatingTime)}
                   closeOnSelect={true}
@@ -226,8 +237,8 @@ export default function EditAlarmModal(props) {
             {dailyCheck || weeklyCheck ? (
               <Grid item md={8} marginTop={2}>
                 <MobileTimePicker
+                  timezone={"UTC"}
                   label="Tidspunkt for alarm"
-                  required
                   defaultValue={dayjs(props.alarm.activatingTime)}
                   ampm={false}
                   slotProps={{

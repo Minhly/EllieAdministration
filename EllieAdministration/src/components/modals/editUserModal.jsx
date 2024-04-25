@@ -45,7 +45,7 @@ export default function EditUserModal(props) {
     contactPersonId: "",
     userId: 1,
   });
-
+  console.log(props.user.rooms[0].id);
   const config = {
     headers: {
       "ngrok-skip-browser-warning": 1,
@@ -124,7 +124,7 @@ export default function EditUserModal(props) {
     const roomDataNull = {
       userId: null,
     };
-
+    console.log(room);
     const config = {
       headers: {
         "ngrok-skip-browser-warning": 1,
@@ -157,24 +157,22 @@ export default function EditUserModal(props) {
       )
       .then((roomResponse) => {
         if (roomResponse.status === 200) {
-          //window.location.reload(true);
-        } else {
-          console.log("failed" + roomResponse.body);
-        }
-      })
-      .catch((error) => {
-        console.log(error.roomResponse);
-      });
-
-    axios
-      .put(
-        "https://totally-helpful-krill.ngrok-free.app/room?id=" + room,
-        roomData,
-        config
-      )
-      .then((roomResponse) => {
-        if (roomResponse.status === 200) {
-          window.location.reload(true);
+          axios
+            .put(
+              "https://totally-helpful-krill.ngrok-free.app/room?id=" + room,
+              roomData,
+              config
+            )
+            .then((roomResponse2) => {
+              if (roomResponse2.status === 200) {
+                window.location.reload(true);
+              } else {
+                console.log("failed" + roomResponse2.body);
+              }
+            })
+            .catch((error) => {
+              console.log(error.roomResponse2);
+            });
         } else {
           console.log("failed" + roomResponse.body);
         }

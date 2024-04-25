@@ -80,6 +80,9 @@ export default function CreateAlarmModal() {
     usersToSetAlarmFor: [],
   });
 
+  dayjs.extend(utc);
+  dayjs.extend(timezone);
+
   const handleCheckboxChange = (event) => {
     setDailyCheck(event.target.checked);
   };
@@ -276,6 +279,7 @@ export default function CreateAlarmModal() {
             {dailyCheck || weeklyCheck ? (
               <Grid item md={8} marginTop={2}>
                 <MobileTimePicker
+                  timezone={"UTC"}
                   label="Tidspunkt for alarm"
                   ampm={false}
                   slotProps={{
