@@ -20,6 +20,13 @@ import UserAlarmsModal from "../components/modals/userAlarmsModal";
 import { useLoggedInStore } from "../components/zustandStore";
 import GroupIcon from "@mui/icons-material/Group";
 import UserNotesModal from "../components/modals/userNotesModal";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import ListItemButton from "@mui/material/ListItemButton";
+import ListItemText from "@mui/material/ListItemText";
+import ListItemAvatar from "@mui/material/ListItemAvatar";
+import Checkbox from "@mui/material/Checkbox";
+import Avatar from "@mui/material/Avatar";
 
 function createData(
   id,
@@ -158,6 +165,10 @@ function EditUser() {
                 <TableCell
                   align="left"
                   sx={{ fontWeight: "bold", color: "#6c546f" }}
+                ></TableCell>
+                <TableCell
+                  align="left"
+                  sx={{ fontWeight: "bold", color: "#6c546f" }}
                 >
                   Id
                 </TableCell>
@@ -223,6 +234,17 @@ function EditUser() {
                   key={row.id}
                   sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                 >
+                  <ListItem key={row.id} disablePadding>
+                    <ListItemButton>
+                      <ListItemAvatar>
+                        <Avatar
+                          alt={row.firstName}
+                          src={`/static/images/avatar/1.jpg`}
+                        />
+                      </ListItemAvatar>
+                      <ListItemText id={row.id} />
+                    </ListItemButton>
+                  </ListItem>
                   <TableCell component="th" scope="row">
                     {row.id}
                   </TableCell>

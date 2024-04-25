@@ -178,9 +178,7 @@ function AlarmPage() {
                 <TableCell
                   align="left"
                   sx={{ fontWeight: "bold", color: "#85B585" }}
-                >
-                  Image
-                </TableCell>
+                ></TableCell>
                 <TableCell
                   align="left"
                   sx={{ fontWeight: "bold", color: "#85B585" }}
