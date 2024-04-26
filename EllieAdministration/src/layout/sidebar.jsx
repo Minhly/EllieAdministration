@@ -101,12 +101,14 @@ function Sidebar2() {
             </Typography>
           </Grid>
           <Button
+            variant="contained"
             style={{
               position: "absolute",
               bottom: 0,
               right: 0,
               left: 0,
               textDecoration: "none",
+              backgroundColor: "#C1E1F1",
               fontWeight: "bold",
               color: "#85B585",
             }}
