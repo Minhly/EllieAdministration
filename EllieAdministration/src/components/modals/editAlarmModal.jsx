@@ -141,7 +141,7 @@ export default function EditAlarmModal(props) {
 
     axios
       .put(
-        "https://totally-helpful-krill.ngrok-free.app/alarm?id=" +
+        "https://totally-helpful-krill.ngrok-free.app/alarm/customput?id=" +
           props.alarm.id,
         alarmData,
         config

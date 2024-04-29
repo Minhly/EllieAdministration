@@ -159,7 +159,7 @@ export default function CreateAlarmModal() {
 
     axios
       .post(
-        "https://totally-helpful-krill.ngrok-free.app/alarm",
+        "https://totally-helpful-krill.ngrok-free.app/alarm/custompost",
         alarmData,
         config
       )
