@@ -27,6 +27,8 @@ import ListItemText from "@mui/material/ListItemText";
 import ListItemAvatar from "@mui/material/ListItemAvatar";
 import Checkbox from "@mui/material/Checkbox";
 import Avatar from "@mui/material/Avatar";
+import IconTextField from "../components/modals/iconTextField";
+import MeetingRoomIcon from "@mui/icons-material/MeetingRoom";
 
 function createData(
   id,
@@ -137,7 +139,7 @@ function EditUser() {
           <CreateUserModal />
         </div>
         <TableContainer style={{ maxHeight: 800 }} component={Paper}>
-          <TextField
+          <IconTextField
             id="search-box"
             label="Filtrere efter For/Efternavn"
             onChange={filterBySearch}
@@ -147,8 +149,9 @@ function EditUser() {
               marginLeft: "50px",
               marginTop: "20px",
             }}
+            iconStart={<GroupIcon />}
           />
-          <TextField
+          <IconTextField
             id="search-box"
             label="Filtrere efter Værelse"
             onChange={filterBySearchRoom}
@@ -158,6 +161,7 @@ function EditUser() {
               marginLeft: "50px",
               marginTop: "20px",
             }}
+            iconStart={<MeetingRoomIcon />}
           />
           <Table sx={{ minWidth: 650 }} aria-label="simple table">
             <TableHead>

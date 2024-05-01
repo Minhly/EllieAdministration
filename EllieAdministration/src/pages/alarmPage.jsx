@@ -19,6 +19,9 @@ import axios from "axios";
 import EditAlarmModal from "../components/modals/editAlarmModal";
 import AccessAlarmIcon from "@mui/icons-material/AccessAlarm";
 import { useLoggedInStore } from "../components/zustandStore";
+import IconTextField from "../components/modals/iconTextField";
+import GroupIcon from "@mui/icons-material/Group";
+import SubtitlesIcon from "@mui/icons-material/Subtitles";
 
 function createData(id, name, activateAlarm, description, image) {
   return {
@@ -137,7 +140,7 @@ function AlarmPage() {
             alignItems={"center"}
             sx={{ display: "flex", alignItems: "center" }}
           >
-            <TextField
+            <IconTextField
               id="search-box"
               label="Filtrere efter Beboer"
               onChange={filterBySearch}
@@ -147,8 +150,9 @@ function AlarmPage() {
                 marginLeft: "50px",
                 marginTop: "20px",
               }}
+              iconStart={<GroupIcon />}
             />
-            <TextField
+            <IconTextField
               id="search-box"
               label="Filtrere efter Titler"
               onChange={filterBySearchTitle}
@@ -158,8 +162,9 @@ function AlarmPage() {
                 marginLeft: "50px",
                 marginTop: "20px",
               }}
+              iconStart={<SubtitlesIcon />}
             />
-            <TextField
+            <IconTextField
               id="search-box"
               label="Filtrere efter Alarm tid"
               onChange={filterBySearchAlarm}
@@ -169,6 +174,7 @@ function AlarmPage() {
                 marginLeft: "50px",
                 marginTop: "20px",
               }}
+              iconStart={<AccessAlarmIcon />}
             />
           </Grid>
 

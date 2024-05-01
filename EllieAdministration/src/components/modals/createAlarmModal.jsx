@@ -37,6 +37,9 @@ import { useLoggedInStore } from "../zustandStore";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import utc from "dayjs/plugin/utc";
 import timezone from "dayjs/plugin/timezone";
+import SubtitlesIcon from "@mui/icons-material/Subtitles";
+import DescriptionIcon from "@mui/icons-material/Description";
+import IconTextField from "./iconTextField";
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
@@ -206,7 +209,7 @@ export default function CreateAlarmModal() {
           <Typography variant="h5">Opret alarm</Typography>
           <Grid container md={12} spacing={2}>
             <Grid item md={6}>
-              <TextField
+              <IconTextField
                 margin="normal"
                 required
                 name="name"
@@ -214,10 +217,11 @@ export default function CreateAlarmModal() {
                 id="name"
                 onChange={handleChange}
                 style={{ width: "100%" }}
+                iconStart={<SubtitlesIcon />}
               />
             </Grid>
             <Grid item md={12}>
-              <TextField
+              <IconTextField
                 id="description"
                 name="description"
                 onChange={handleChange}
@@ -226,6 +230,7 @@ export default function CreateAlarmModal() {
                 required
                 rows={5}
                 fullWidth
+                iconStart={<DescriptionIcon />}
               />
             </Grid>
             <Grid item md={12}>

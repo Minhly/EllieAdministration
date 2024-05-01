@@ -18,6 +18,9 @@ import EditEmployeeModal from "../components/modals/editEmployeeModal";
 import axios from "axios";
 import BadgeIcon from "@mui/icons-material/Badge";
 import { useLoggedInStore } from "../components/zustandStore";
+import EmailIcon from "@mui/icons-material/Email";
+import GroupIcon from "@mui/icons-material/Group";
+import IconTextField from "../components/modals/iconTextField";
 
 function createData(
   id,
@@ -126,7 +129,7 @@ function EmployeePage() {
           <CreateEmployeeModal />
         </div>
         <TableContainer style={{ maxHeight: 800 }} component={Paper}>
-          <TextField
+          <IconTextField
             id="search-box"
             label="Filtrere efter Email"
             onChange={filterBySearchEmail}
@@ -136,8 +139,9 @@ function EmployeePage() {
               marginLeft: "50px",
               marginTop: "20px",
             }}
+            iconStart={<EmailIcon />}
           />
-          <TextField
+          <IconTextField
             id="search-box"
             label="Filtrere efter For/Efternavn"
             onChange={filterBySearch}
@@ -147,6 +151,7 @@ function EmployeePage() {
               marginLeft: "50px",
               marginTop: "20px",
             }}
+            iconStart={<GroupIcon />}
           />
           <Table sx={{ minWidth: 650 }} aria-label="simple table">
             <TableHead>
